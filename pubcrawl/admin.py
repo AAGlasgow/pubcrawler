@@ -1,6 +1,6 @@
 from django.contrib import admin
-from rango.models import Category, Page
-from rango.models import UserProfile
+from pubcrawl.models import Category, Page
+from pubcrawl.models import UserProfile
 
 admin.site.register(UserProfile)
 

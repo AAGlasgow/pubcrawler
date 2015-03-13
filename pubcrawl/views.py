@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from rango.models import Category
-from rango.models import Page
-from rango.models import UserProfile
-from rango.forms import CategoryForm
-from rango.forms import PageForm
-from rango.forms import UserForm, UserProfileForm
-from rango.bing_search import run_query
+from pubcrawl.models import Category
+from pubcrawl.models import Page
+from pubcrawl.models import UserProfile
+from pubcrawl.forms import CategoryForm
+from pubcrawl.forms import PageForm
+from pubcrawl.forms import UserForm, UserProfileForm
+from pubcrawl.bing_search import run_query
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -45,7 +45,7 @@ def index(request):
     context_dict['visits'] = visits
 
 
-    response = render(request,'rango/index.html', context_dict)
+    response = render(request,'pubcrawl/index.html', context_dict)
 
     return response
 
@@ -55,7 +55,7 @@ def about(request):
         count = request.session.get('visits')
     else:
         count = 0
-    return render(request, 'rango/about.html', {'visits': count})
+    return render(request, 'pubcrawl/about.html', {'visits': count})
 
 def category(request, category_name_slug):
 
@@ -85,7 +85,7 @@ def category(request, category_name_slug):
         pass
 
     
-    return render(request, 'rango/category.html', context_dict)
+    return render(request, 'pubcrawl/category.html', context_dict)
 
 @login_required
 def add_category(request):
@@ -101,7 +101,7 @@ def add_category(request):
     else:
         form = CategoryForm()
 
-    return render(request, 'rango/add_category.html', {'form': form})
+    return render(request, 'pubcrawl/add_category.html', {'form': form})
 
 @login_required
 def add_page(request, category_name_slug):
@@ -127,7 +127,7 @@ def add_page(request, category_name_slug):
         form = PageForm()
 
     context_dict = {'form':form, 'category':cat, 'failedURL':category_name_slug}
-    return render(request, 'rango/add_page.html', context_dict)
+    return render(request, 'pubcrawl/add_page.html', context_dict)
 
 def search(request):
 
@@ -139,7 +139,7 @@ def search(request):
         if query:
             result_list = run_query(query)
 
-    return render(request, 'rango/search.html', {'result_list': result_list})
+    return render(request, 'pubcrawl/search.html', {'result_list': result_list})
 
 def track_url(request):
     if request.method == 'GET':
@@ -157,7 +157,7 @@ def track_url(request):
             except:
                 print "Page does not exists"
 
-    return redirect('/rango/')
+    return redirect('/pubcrawl/')
 
 @login_required
 def register_profile(request):
@@ -165,7 +165,7 @@ def register_profile(request):
     try:
         UserProfile.objects.get(user=current_user)
         # This user has already a profile
-        return HttpResponseRedirect('/rango/')
+        return HttpResponseRedirect('/pubcrawl/')
     
     except UserProfile.DoesNotExist:
         if request.method == 'POST':
@@ -182,12 +182,12 @@ def register_profile(request):
                 profile.save()
             else:
                 print profile_form.errors
-            return HttpResponseRedirect('/rango/')
+            return HttpResponseRedirect('/pubcrawl/')
         else:
             profile_form = UserProfileForm()
 
         return render(request,
-                'rango/profile_registration.html',
+                'pubcrawl/profile_registration.html',
                 {'profile_form': profile_form} )
 
 @login_required
@@ -204,7 +204,7 @@ def profile(request, profile_user_name):
             context_dict['profile_exists'] = False
     except Category.DoesNotExist:
         pass
-    return render(request, 'rango/profile.html', context_dict)
+    return render(request, 'pubcrawl/profile.html', context_dict)
 
 @login_required
 def edit_profile(request):
@@ -252,7 +252,7 @@ def edit_profile(request):
                 valid_update = False
 
         if valid_update:
-            return HttpResponseRedirect('/rango/profile/'+current_user.username+'/')
+            return HttpResponseRedirect('/pubcrawl/profile/'+current_user.username+'/')
 
 
     context_dict = {}
@@ -270,7 +270,7 @@ def edit_profile(request):
     context_dict['profile_form'] = profile_form
 
     return render(request,
-            'rango/edit_profile.html',
+            'pubcrawl/edit_profile.html',
             context_dict)
 
 
@@ -282,7 +282,7 @@ def profile_list(request):
         context_dict['users'] = users
     except Category.DoesNotExist:
         pass
-    return render(request, 'rango/profile_list.html', context_dict)
+    return render(request, 'pubcrawl/profile_list.html', context_dict)
 
 
 ##def register(request):
@@ -318,7 +318,7 @@ def profile_list(request):
 ##        profile_form = UserProfileForm()
 ##
 ##    return render(request,
-##            'rango/register.html',
+##            'pubcrawl/register.html',
 ##            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
 
@@ -334,9 +334,9 @@ def profile_list(request):
 ##        if user:
 ##            if user.is_active:
 ##                login(request, user)
-##                return HttpResponseRedirect('/rango/')
+##                return HttpResponseRedirect('/pubcrawl/')
 ##            else:
-##                return HttpResponse("Your Rango account is disabled.")
+##                return HttpResponse("Your pubcrawl account is disabled.")
 ##        else:
 ##            print "Invalid login details: {0}, {1}".format(username, password)
 ##            try:
@@ -346,16 +346,16 @@ def profile_list(request):
 ##                return HttpResponse("Invalid username supplied.")
 ##
 ##    else:
-##        return render(request, 'rango/login.html', {})
+##        return render(request, 'pubcrawl/login.html', {})
 
 
 @login_required
 def restricted(request):
-    return render(request, 'rango/restricted.html')
+    return render(request, 'pubcrawl/restricted.html')
 
 ##@login_required
 ##def user_logout(request):
 ##    logout(request)
-##    return HttpResponseRedirect('/rango/')
+##    return HttpResponseRedirect('/pubcrawl/')
 
     

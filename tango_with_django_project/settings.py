@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rango',
+    'pubcrawl',
     'registration',
 )
 
@@ -89,7 +89,7 @@ USE_TZ = True
 REGISTRATION_OPEN = True                
 ACCOUNT_ACTIVATION_DAYS = 7 
 REGISTRATION_AUTO_LOGIN = True
-LOGIN_REDIRECT_URL = '/rango/'
+LOGIN_REDIRECT_URL = '/pubcrawl/'
 LOGIN_URL = '/accounts/login/'  
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from rango.models import Page, Category, UserProfile
+from pubcrawl.models import Page, Category, UserProfile
 from django.contrib.auth.models import User
 
 

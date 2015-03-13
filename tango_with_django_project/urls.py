@@ -5,7 +5,7 @@ from registration.backends.simple.views import RegistrationView
 
 class MyRegistrationView(RegistrationView):
     def get_success_url(self,request, user):
-        return '/rango/add_profile/'
+        return '/pubcrawl/add_profile/'
 
   
 
@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^rango/', include('rango.urls')),
+    url(r'^pubcrawl/', include('pubcrawl.urls')),
     url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
 )
