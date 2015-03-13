@@ -6,8 +6,7 @@ from registration.backends.simple.views import RegistrationView
 class MyRegistrationView(RegistrationView):
     def get_success_url(self,request, user):
         return '/pubcrawl/add_profile/'
-
-  
+ 
 
 urlpatterns = patterns('',
     # Examples:
@@ -18,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^pubcrawl/', include('pubcrawl.urls')),
     url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
+	url(r'^$', include('pubcrawl.urls')),
 )
 
 if settings.DEBUG:
