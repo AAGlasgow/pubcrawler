@@ -50,6 +50,7 @@ class Crawl(models.Model):
         costume = models.BooleanField(default=False)
         costumeDescription = models.CharField(max_length=500)
         description = models.CharField(max_length=500)
+        picture = models.ImageField(upload_to='crawl_images', blank=True)
         pubs = models.ManyToManyField(Pub)
         slug = models.SlugField(unique=True)
         def save(self, *args, **kwargs):

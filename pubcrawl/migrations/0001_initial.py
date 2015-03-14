@@ -35,6 +35,7 @@ class Migration(migrations.Migration):
                 ('costume', models.BooleanField(default=False)),
                 ('costumeDescription', models.CharField(max_length=500)),
                 ('description', models.CharField(max_length=500)),
+                ('picture', models.ImageField(upload_to=b'crawl_images', blank=True)),
                 ('slug', models.SlugField(unique=True)),
                 ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
