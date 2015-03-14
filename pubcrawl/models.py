@@ -45,6 +45,11 @@ class Pub(models.Model):
 class Crawl(models.Model):
         creator = models.ForeignKey(User)
         name = models.CharField(max_length=128)
+        drink = models.BooleanField(default=False)
+        drinkDescription = models.CharField(max_length=500)
+        costume = models.BooleanField(default=False)
+        costumeDescription = models.CharField(max_length=500)
+        description = models.CharField(max_length=500)
         pubs = models.ManyToManyField(Pub)
         slug = models.SlugField(unique=True)
         def save(self, *args, **kwargs):

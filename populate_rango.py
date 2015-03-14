@@ -21,8 +21,8 @@ def populate():
     king_tuts_pub = add_pub('King Tuts Wah Wah Hut', 'ChIJD6VT8idEiEgRu0uJunEd8pc')
     buff_club_pub = add_pub('The Buff Club', 'ChIJRbplOSdEiEgR65ScWqJ11e8')
 
-    get_pished_crawl = add_crawl(butch_user, 'Get Pished', [dram_pub, guu_pub, curlers_rest_pub])
-    hippy_crawl_crawl = add_crawl(rain_user, 'Hippy Crawl', [king_tuts_pub, buff_club_pub, nice_n_sleazy_pub])
+    get_pished_crawl = add_crawl(butch_user, 'Get Pished', 'In alcohols defense Ive done some dumb shit while completely sober too!', False, "", False, "", [dram_pub, guu_pub, curlers_rest_pub])
+    hippy_crawl_crawl = add_crawl(rain_user, 'Hippy Crawl', 'Best chances to come by pills youll have on the toilets', False, "", False, "", [king_tuts_pub, buff_club_pub, nice_n_sleazy_pub])
 
     hater_review = add_review(rain_user, get_pished_crawl, False, 'I didnt like it at all. There was no pub where anyone could sell me some weed or other drugs. Everyone else seemed to enjoy it though. Mainstream shite!')
     love_review = add_review(peter_user, get_pished_crawl, True, 'Was fucked that night, woke up the next day in my own sick somewhere in Dundee. Best night evaaa!')
@@ -129,8 +129,8 @@ def add_pub(name, placeID):
     p.save()
     return p
 
-def add_crawl(creator, name, pubs):
-    c = Crawl(id=None, name=name, creator=creator)
+def add_crawl(creator, name, description, drink, drinkDescription, costume, costumeDescription, pubs):
+    c = Crawl(id=None, name=name, creator=creator, description=description, drink=drink, drinkDescription=drinkDescription, costume=costume, costumeDescription=costumeDescription)
     c.save()
     for pub in pubs:
         c.pubs.add(pub)
