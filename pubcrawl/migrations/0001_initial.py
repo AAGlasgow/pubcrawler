@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
             name='Pub',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('link', models.URLField(unique=True)),
+                ('placeID', models.CharField(unique=True, max_length=256)),
                 ('name', models.CharField(max_length=128)),
             ],
             options={
@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
             name='Review',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('raiting', models.IntegerField(default=0)),
+                ('liked', models.BooleanField(default=False)),
                 ('text', models.CharField(max_length=750)),
                 ('crawl', models.ForeignKey(to='pubcrawl.Crawl')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),

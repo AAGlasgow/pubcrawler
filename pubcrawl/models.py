@@ -34,7 +34,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Pub(models.Model):
-        link = models.URLField(unique=True)
+        placeID = models.CharField(max_length=256, unique=True)
         name = models.CharField(max_length=128)
         def save(self, *args, **kwargs):
                 super(Pub, self).save(*args, **kwargs)
@@ -57,7 +57,7 @@ class Crawl(models.Model):
 class Review(models.Model):
         user = models.ForeignKey(User)
         crawl = models.ForeignKey(Crawl)
-        raiting = models.IntegerField(default=0) #0-5 Stars
+        liked = models.BooleanField(default=False)
         text = models.CharField(max_length=750)
         def save(self, *args, **kwargs):
                 super(Review, self).save(*args, **kwargs)

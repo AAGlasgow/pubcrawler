@@ -3,6 +3,8 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from pubcrawl.models import Category
 from pubcrawl.models import Page
+from pubcrawl.models import Crawl
+from pubcrawl.models import Review
 from pubcrawl.models import UserProfile
 from pubcrawl.forms import CategoryForm
 from pubcrawl.forms import PageForm
@@ -22,6 +24,12 @@ def index(request):
 
     page_list = Page.objects.order_by('-views')[:5]
     context_dict['pages'] = page_list
+
+    crawl_list = Crawl.objects.order_by('name')[:10]
+    context_dict['crawls'] = crawl_list
+
+    review_list = Review.objects.order_by('crawl')[:10]
+    context_dict['reviews'] = review_list
     
 
     visits = request.session.get('visits')
