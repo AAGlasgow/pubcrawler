@@ -36,8 +36,6 @@ class UserProfile(models.Model):
 class Pub(models.Model):
         placeID = models.CharField(max_length=256, unique=True)
         name = models.CharField(max_length=128)
-        def save(self, *args, **kwargs):
-                super(Pub, self).save(*args, **kwargs)
 
         def __unicode__(self):
                 return self.name
@@ -66,8 +64,6 @@ class Review(models.Model):
         crawl = models.ForeignKey(Crawl)
         liked = models.BooleanField(default=False)
         text = models.CharField(max_length=750)
-        def save(self, *args, **kwargs):
-                super(Review, self).save(*args, **kwargs)
 
         def __unicode__(self):
                 return self.text
