@@ -1,12 +1,23 @@
 from django.test import TestCase
 from pubcrawl.models import Pub, Crawl, Review
 from django.contrib.auth.models import User
+import datetime
+
 
 class CrawlTestCase(TestCase):
     string = 'Awesome crawl, you should try it'
     def setUp(self):
         user = User.objects.create(username='Butch', email='butch@gmail.com', password='myPassword')
         self.crawl = Crawl.objects.create(creator=user, name='Get Pished', description=self.string)
+        self.mydatetime = datetime.datetime.now()
+
+    def test_date_time(self):
+        self.assertEqual(self.mydatetime.year, self.crawl.dateTime.year)
+        self.assertEqual(self.mydatetime.month, self.crawl.dateTime.month)
+        self.assertEqual(self.mydatetime.day, self.crawl.dateTime.day)
+        self.assertEqual(self.mydatetime.hour, self.crawl.dateTime.hour)
+        self.assertEqual(self.mydatetime.minute, self.crawl.dateTime.minute)
+        self.assertEqual(self.mydatetime.second, self.crawl.dateTime.second)
 
     def test_crawl_has_name(self):
         self.assertEqual(self.crawl.name, 'Get Pished')
