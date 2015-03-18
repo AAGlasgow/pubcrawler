@@ -24,7 +24,6 @@
   </head>
 
   <body>
-
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -38,7 +37,6 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-				<li><a href="{% url 'welcome' %}">Frontpage</a></li>
                 <li><a href="{% url 'index' %}">Home</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
