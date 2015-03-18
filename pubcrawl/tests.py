@@ -6,10 +6,21 @@ import datetime
 
 class CrawlTestCase(TestCase):
     string = 'Awesome crawl, you should try it'
+    drinkDescr = 'A Cider in every pub'
+    costumeDescr = 'Nobody would see this if costume==False'
     def setUp(self):
         user = User.objects.create(username='Butch', email='butch@gmail.com', password='myPassword')
+        self.dram_pub = Pub.objects.create(name='DRAM!', placeID='ChIJKcWC6i1EiEgRrAN2HMyTv0U')
+        self.nice_n_sleazy_pub = Pub.objects.create(name='Nice N Sleazy', placeID='ChIJ2U7jlChEiEgRaqr1lWpQ2RQ')
         self.crawl = Crawl.objects.create(creator=user, name='Get Pished', description=self.string)
-        self.mydatetime = datetime.datetime.now()
+        self.mydatetime = datetime.datetime.now() #implemented here to keep mydate as close as possible to the crawl object
+        self.crawl.pubs.add(self.dram_pub)
+        self.crawl.pubs.add(self.nice_n_sleazy_pub)
+        self.crawl.drink=True
+        self.crawl.drinkDescription=self.drinkDescr
+        self.crawl.costume=False
+        self.crawl.costumeDescription=self.costumeDescr
+        self.crawl.save()
 
     def test_date_time(self):
         self.assertEqual(self.mydatetime.year, self.crawl.dateTime.year)
@@ -19,7 +30,7 @@ class CrawlTestCase(TestCase):
         self.assertEqual(self.mydatetime.minute, self.crawl.dateTime.minute)
         self.assertEqual(self.mydatetime.second, self.crawl.dateTime.second)
 
-    def test_crawl_has_name(self):
+    def test_crawl_has_right_name(self):
         self.assertEqual(self.crawl.name, 'Get Pished')
 
     def test_crawl_has_right_user(self):
@@ -27,6 +38,18 @@ class CrawlTestCase(TestCase):
 
     def test_crawl_has_right_description(self):
         self.assertEqual(self.crawl.description, self.string)
+
+    def test_crawl_has_right_pubs(self):
+        self.assertIn(self.nice_n_sleazy_pub, self.crawl.pubs.all())
+        self.assertIn(self.dram_pub, self.crawl.pubs.all())
+
+    def test_crawl_has_right_drink(self):
+        self.assertEqual(self.crawl.drink, True)
+        self.assertEqual(self.crawl.drinkDescription, self.drinkDescr)
+
+    def test_crawl_has_right_costume(self):
+        self.assertEqual(self.crawl.costume, False)
+        self.assertEqual(self.crawl.costumeDescription, self.costumeDescr)
 
 class ReviewTestCase(TestCase):
     string = 'Awesome crawl, you should try it'
@@ -47,6 +70,18 @@ class ReviewTestCase(TestCase):
 
     def test_liked(self):
         self.assertEqual(self.review.liked, True)
+
+class PubTestCase(TestCase):
+    stringName = 'DRAM!'
+    stringPlaceID='ChIJKcWC6i1EiEgRrAN2HMyTv0U'
+    def setUp(self):
+         self.pub = Pub.objects.create(name=self.stringName, placeID=self.stringPlaceID)
+
+    def test_pub_name(self):
+        self.assertEqual(self.pub.name, self.stringName)
+
+    def test_pub_ID(self):
+        self.assertEqual(self.pub.placeID, self.stringPlaceID)
 
 
 # Create your tests here.
