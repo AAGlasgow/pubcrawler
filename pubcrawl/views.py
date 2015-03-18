@@ -58,12 +58,8 @@ def index(request):
     return response
 
 	
-def about(request):
-    if request.session.get('visits'):
-        count = request.session.get('visits')
-    else:
-        count = 0
-    return render(request, 'pubcrawl/about.html', {'visits': count})
+def welcome(request):
+    return render(request, 'pubcrawl/welcome.html')
 
 def category(request, category_name_slug):
 
