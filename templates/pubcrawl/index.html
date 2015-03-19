@@ -14,6 +14,8 @@
     {% endif %}
   </div>
 
+  <input type='hidden' id='current_page' />
+  <input type='hidden' id='show_per_page' />
 
   <div class="row placeholders">
     <div class="col-xs-12 col-sm-6 placeholder">
@@ -24,9 +26,12 @@
       </div>
       {% if crawls%}
         <ul class="list-group">
+		<div id ='content'>
           {% for crawl in crawls %}
             <li class="list-group-item">{{ crawl.name }}</li>
           {% endfor %}
+		</div>
+		<div id='page_navigation'></div>
         </ul>
       {% else %}
         <strong>There are no crawls present.</strong>
@@ -45,6 +50,7 @@
           {% for review in reviews %}
             <li class="list-group-item">{{ review.user }}'s opinion about "{{ review.crawl }}"</a></li>
           {% endfor %}
+		  <div id='page_navigation'></div>
         </ul>
       {% else %}
         <strong>There are no reviews present.</strong>
