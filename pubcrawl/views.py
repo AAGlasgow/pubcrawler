@@ -289,6 +289,10 @@ def profile_list(request):
     return render(request, 'pubcrawl/profile_list.html', context_dict)
 
 
+def create_pubcrawl(request):
+    return render(request, 'pubcrawl/create_pubcrawl.html')
+
+    
 ##def register(request):
 ##
 ##    registered = False

@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^profile/(?P<profile_user_name>[\w\-]+)/$', views.profile, name='profile'),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
     url(r'^profile_list/$', views.profile_list, name='profile_list'),
+    url(r'^create_pubcrawl/$', views.create_pubcrawl, name='create_pubcrawl'),
     ) 
 
 

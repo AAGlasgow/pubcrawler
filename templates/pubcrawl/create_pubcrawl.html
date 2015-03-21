@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Add a crawl{% endblock %}
+
+{% block body_block %}
+
+	<div id="map-canvas" style="width: 800px; height: 600px;"></div>
+	<input type="focus" id="pac-input" style="width:300px; height: 20px; margin-top: 16px;"></input>
+	<div id="placeid"></div>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTItbgufIp87MQ-wZK8WCRcdJNaqvI1Eo&libraries=places"></script>
+<script src="{% static 'js/create_pubcrawl.js' %}"></script>
+{% endblock %}
