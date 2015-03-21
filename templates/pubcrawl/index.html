@@ -7,18 +7,14 @@
 
 {% block body_block %}
   <div class="page-header">
-    {% if user.is_authenticated %}
-      <h1>Rango says... hello {{ user.username }}!</h1>
-    {% else %}
-      <h1>Rango says... hello world!</h1>
-    {% endif %}
+    <h1>Results</h1>
   </div>
 
   <input type='hidden' id='current_page' />
   <input type='hidden' id='show_per_page' />
 
   <div class="row placeholders">
-    <div class="col-xs-12 col-sm-6 placeholder">
+    <div class="col-md-8 placeholder">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">Top crawls by name</h3>
@@ -35,25 +31,6 @@
         </ul>
       {% else %}
         <strong>There are no crawls present.</strong>
-      {% endif %}
-    </div>
-
-
-    <div class="col-xs-12 col-sm-6 placeholder">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Top reviews by crawl</h3>
-        </div>
-      </div>
-      {% if reviews %}
-        <ul class="list-group">
-          {% for review in reviews %}
-            <li class="list-group-item">{{ review.user }}'s opinion about "{{ review.crawl }}"</a></li>
-          {% endfor %}
-		  <div id='page_navigation'></div>
-        </ul>
-      {% else %}
-        <strong>There are no reviews present.</strong>
       {% endif %}
     </div>
   </div>
