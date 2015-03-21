@@ -14,7 +14,7 @@
   <input type='hidden' id='show_per_page' />
 
   <div class="row placeholders">
-    <div class="col-md-8 placeholder">
+    <div class="col-md-10 placeholder">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">Top crawls by name</h3>
@@ -22,12 +22,18 @@
       </div>
       {% if crawls%}
         <ul class="list-group">
-		<div id ='content'>
-          {% for crawl in crawls %}
-            <li class="list-group-item">{{ crawl.name }}</li>
-          {% endfor %}
-		</div>
-		<div id='page_navigation'></div>
+    		<div id ='content'>
+              {% for crawl in crawls %}
+                  <a href="#" class="list-group-item">
+                      <h4 class="list-group-item-heading pull-left">{{ crawl.name }}</h4>
+                      <p class="list-group-item-text">{{ crawl.description }}</p>
+                      <div class="row">
+                        <strong>Pub1>Pub2>Pub3...</strong>
+                      </div>
+                  </a>
+              {% endfor %}
+    		</div>
+    		<div id='page_navigation'></div>
         </ul>
       {% else %}
         <strong>There are no crawls present.</strong>
