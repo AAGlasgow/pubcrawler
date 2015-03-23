@@ -45,6 +45,17 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='Crawl_Pub',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('position', models.IntegerField()),
+                ('crawl', models.ForeignKey(to='pubcrawl.Crawl')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Page',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -94,9 +105,9 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.AddField(
-            model_name='crawl',
-            name='pubs',
-            field=models.ManyToManyField(to='pubcrawl.Pub'),
+            model_name='crawl_pub',
+            name='pub',
+            field=models.ForeignKey(to='pubcrawl.Pub'),
             preserve_default=True,
         ),
     ]

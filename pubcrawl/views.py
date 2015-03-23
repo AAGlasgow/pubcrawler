@@ -8,6 +8,7 @@ from pubcrawl.models import Review
 from pubcrawl.models import UserProfile
 from pubcrawl.forms import CategoryForm
 from pubcrawl.forms import PageForm
+from pubcrawl.models import Crawl_Pub
 from pubcrawl.forms import UserForm, UserProfileForm
 from pubcrawl.bing_search import run_query
 from django.contrib.auth import authenticate, login
@@ -25,11 +26,14 @@ def index(request):
     page_list = Page.objects.order_by('-views')[:5]
     context_dict['pages'] = page_list
 
-    crawl_list = Crawl.objects.order_by('name')[:10]
+    crawl_list = Crawl.objects.order_by('name')
     context_dict['crawls'] = crawl_list
 
-    review_list = Review.objects.order_by('crawl')[:10]
+    review_list = Review.objects.order_by('crawl')
     context_dict['reviews'] = review_list
+
+    crawl_pub_list = Crawl_Pub.objects.order_by('position')
+    context_dict['crawl_pub'] = crawl_pub_list
     
 
     visits = request.session.get('visits')

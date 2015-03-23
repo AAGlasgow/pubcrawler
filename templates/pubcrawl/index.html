@@ -36,7 +36,11 @@
                       <h4 class="list-group-item-heading pull-left">{{ crawl.name }}</h4>
                       <p class="list-group-item-text">{{ crawl.description }}</p>
                       <div class="row">
-                        <strong>Pub1>Pub2>Pub3...</strong>
+                        {% for pub in crawl_pub %}
+                            {% if pub.crawl == crawl %}
+                                <strong>{{ pub.pub }}, </strong>
+                            {% endif %}
+                        {% endfor %}
                       </div>
                   </a>
               {% endfor %}

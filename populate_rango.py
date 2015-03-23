@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.setti
 import django
 django.setup()
 
-from pubcrawl.models import Category, Page, Crawl, Pub, Review
+from pubcrawl.models import Category, Page, Crawl, Pub, Review, Crawl_Pub
 from django.contrib.auth.models import User
 
 
@@ -13,7 +13,7 @@ def populate():
     butch_user = add_user('Butch', 'butch@gmail.com', 'myPassword')
     peter_user = add_user('Peter', 'peter@gmail.com', 'myPassword')
     rain_user = add_user('Rain', 'rain@gmail.com', 'myPassword')
-    test_user = test_user('test', 'test@gmail.com', 'test')
+    test_user = add_user('test', 'test@gmail.com', 'test')
 
     dram_pub = add_pub('DRAM!', 'ChIJKcWC6i1EiEgRrAN2HMyTv0U')
     nice_n_sleazy_pub = add_pub('Nice N Sleazy', 'ChIJ2U7jlChEiEgRaqr1lWpQ2RQ')
@@ -49,6 +49,10 @@ def populate():
     print "Reviews:"
     for r in Review.objects.all():
         print r
+    print ""
+    print "Crawl_Pub:"
+    for p in Crawl_Pub.objects.all():
+        print p
 
 
 def add_user(name, email, password):
@@ -65,7 +69,7 @@ def add_crawl(creator, name, description, drink, drinkDescription, costume, cost
     c = Crawl(id=None, name=name, creator=creator, description=description, drink=drink, drinkDescription=drinkDescription, costume=costume, costumeDescription=costumeDescription)
     c.save()
     for pub in pubs:
-        c.pubs.add(pub)
+        c.add_pub(pub)
     c.save()
     return c
 
