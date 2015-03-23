@@ -57,28 +57,9 @@
                     </div>
                 </div>
             {% endfor %}
-  <div class="row placeholders">
-    <div class="col-md-10 placeholder">
-      {% if crawls%}
-        <ul class="list-group">
-    		<div id ='content'>
-              {% for crawl in crawls %}
-                  <a href="#" class="list-group-item">
-                      <h4 class="list-group-item-heading pull-left">{{ crawl.name }}</h4>
-                      <p class="list-group-item-text">{{ crawl.description }}</p>
-                      <div class="row">
-                        {% for pub in crawl_pub %}
-                            {% if pub.crawl == crawl %}
-                                <strong>{{ pub.pub }}, </strong>
-                            {% endif %}
-                        {% endfor %}
-                      </div>
-                  </a>
-              {% endfor %}
-    		</div>
-    		<div id='page_navigation'></div>
-      {% else %}
-        <strong>There are no crawls present.</strong>
-      {% endif %}
+            <div id='page_navigation'></div>
+        {% else %}
+            <strong>There are no crawls present.</strong>
+        {% endif %}
     </div>
 {% endblock %}
