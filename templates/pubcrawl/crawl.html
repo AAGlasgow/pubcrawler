@@ -8,6 +8,11 @@
 	<div class="page-header">
 	        <h1>{{ crawl_name }}</h1>
 	</div>
+
+    <input type='hidden' id='start' value={{ start }}/>
+    <input type='hidden' id='end' value={{ end }}/>
+    <input type='hidden' id='waypoints' value={{ waypoints }}/>
+
 	<div class="container pull-left">
 
                 <div class ="panel panel-default" id ='content'>
@@ -25,6 +30,7 @@
 							{% endif %}
                             <p>Costume: <span class="glyphicon glyphicon-ok"></span></p>
                             <p>Drink: <span class="glyphicon glyphicon-remove"></span></p>
+                            <p>Creator: <a href="{% url 'profile' crawl.creator 'crawl' %}">{{ crawl.creator }}</a></p>
                         </div>
 						
                         <div class="col-md-5">
@@ -50,6 +56,6 @@
 
 {% block javascript %}
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTItbgufIp87MQ-wZK8WCRcdJNaqvI1Eo&libraries=places"></script>
-	<script src="{% static 'js/create_pubcrawl.js' %}"></script>
+	<script src="{% static 'js/crawl.js' %}"></script>
 	<script src="{% static 'js/pubcrawler-ajax.js' %}"></script>
 {% endblock %}

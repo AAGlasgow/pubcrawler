@@ -362,18 +362,21 @@ def rate_crawl(request):
 
 def crawl(request, crawl_name):
     context_dict = {}
-
-    if request.method == 'POST':
-        query = request.POST['query'].strip()
-        if query:
-            context_dict['result_list'] = run_query(query)
-
     try:
         crawl = Crawl.objects.get(slug=crawl_name)
         context_dict['crawl_name'] = crawl.name
         context_dict['crawl'] = crawl
-        context_dict['crawl_pub'] = Crawl_Pub.objects.order_by('crawl')
-    except Category.DoesNotExist:
+        context_dict['crawl_pub'] = Crawl_Pub.objects.order_by('position')
+        crawl_pub = Crawl_Pub.objects.order_by('position')
+
+        pubs = []
+        for pub in crawl_pub.all():
+            if pub.crawl == crawl:
+                pubs.append(pub.pub.placeID)
+        context_dict['start'] = pubs[0]
+        context_dict['end'] = pubs[-1]
+        context_dict['waypoints'] = pubs
+    except Crawl.DoesNotExist:
         pass
 
 
