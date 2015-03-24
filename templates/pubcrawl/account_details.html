@@ -6,9 +6,15 @@
 
 {% block side_block %}
             <ul class="nav nav-pills nav-stacked">
+            {% if user == requested_user %}
                 <li><a href="{% url 'profile' requested_user.username 'crawl' %}">Your crawls</a></li>
                 <li><a href="{% url 'profile' requested_user.username 'review' %}">Your reviews</a></li>
                 <li class="active"><a href="{% url 'account_details' requested_user.username %}">Account details</a></li>
+            {% else %}
+                <li><a href="{% url 'profile' requested_user.username 'crawl' %}">{{ requested_user.username }}'s crawls</a></li>
+                <li><a href="{% url 'profile' requested_user.username 'review' %}">{{ requested_user.username }}'s reviews</a></li>
+                <li class="active"><a href="{% url 'account_details' requested_user.username %}">{{ requested_user.username }}'s account details</a></li>
+            {% endif %}
             </ul>
 
 {% endblock %}

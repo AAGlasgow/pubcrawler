@@ -218,12 +218,17 @@ def profile(request, profile_user_name, pageContent):
             crawls = Crawl.objects.filter(creator=user)
         else:
             reviews = Review.objects.filter(user=user)
-            crawls =  Crawl.objects.filter(reviews.crawl)
+            crawls = []
+            for r in reviews:
+                crawls.append(r.crawl)
+            context_dict['reviews'] = reviews
         context_dict['crawls'] = crawls
+        context_dict['crawl_pub'] = Crawl_Pub.objects.order_by('crawl')
     except Category.DoesNotExist:
         pass
     return render(request, 'pubcrawl/profile.html', context_dict)
 
+@login_required
 def account_details(request, profile_user_name):
     context_dict = {}
     try:
