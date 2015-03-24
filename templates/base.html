@@ -56,20 +56,14 @@
 	<div class="container-fluid">
         <div class="row">
 	    {% block all_block %}
-				<div class="col-sm-3 col-md-2 sidebar">
-				{% block side_block %}
-					{% get_category_list category %}
-					{% if user.is_authenticated %}
-						<br/>
-						<ul><i><a href="{% url 'add_category' %}">Add a New Category</a></i></ul>
-					{% endif %}
-			    {% endblock %}
-				</div>
+		    <div class="col-sm-3 col-md-2 sidebar">
+				{% block side_block %}{% endblock %}
+			</div>
 			
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-           <div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div>
                 {% block body_block %}{% endblock %}
-                </div>
+            </div>
         </div>
 		{% endblock %}
 		
