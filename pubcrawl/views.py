@@ -344,9 +344,18 @@ def rate_crawl(request):
     if crawl_id:
         crawl = Crawl.objects.get(slug = crawl_id)
         if crawl:
-			score = crawl.score + 1
-			crawl.score = score
-			crawl.save()
+            score = crawl.score + 1
+            crawl.score = score
+            crawl.save()
+            
+            user = request.user
+            try:
+                review = Review.objects.get(user = user, crawl = crawl)
+                review.liked = True
+                review.save()
+            except:
+                review = Review.objects.create(user = user, crawl = crawl, liked = True)
+                review.save()
 
     return HttpResponse(score)
 
