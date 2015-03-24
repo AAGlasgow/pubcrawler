@@ -199,7 +199,32 @@ def register_profile(request):
                 {'profile_form': profile_form} )
 
 @login_required
-def profile(request, profile_user_name):
+def profile(request, profile_user_name, pageContent):
+    print pageContent
+
+    context_dict = {}
+
+    if pageContent == 'crawl':
+        contentCrawl = True
+    else:
+        contentCrawl = False
+
+    context_dict['contentCrawl'] = contentCrawl
+
+    try:
+        user = User.objects.get(username=profile_user_name)
+        context_dict['requested_user'] = user
+        if contentCrawl == True:
+            crawls = Crawl.objects.filter(creator=user)
+        else:
+            reviews = Review.objects.filter(user=user)
+            crawls =  Crawl.objects.filter(reviews.crawl)
+        context_dict['crawls'] = crawls
+    except Category.DoesNotExist:
+        pass
+    return render(request, 'pubcrawl/profile.html', context_dict)
+
+def account_details(request, profile_user_name):
     context_dict = {}
     try:
         user = User.objects.get(username=profile_user_name)
@@ -212,7 +237,7 @@ def profile(request, profile_user_name):
             context_dict['profile_exists'] = False
     except Category.DoesNotExist:
         pass
-    return render(request, 'pubcrawl/profile.html', context_dict)
+    return render(request, 'pubcrawl/account_details.html', context_dict)
 
 @login_required
 def edit_profile(request):

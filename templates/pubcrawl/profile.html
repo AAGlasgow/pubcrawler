@@ -4,28 +4,63 @@
 
 {% block title %}Profile{% endblock %}
 
+{% block side_block %}
+            <ul class="nav nav-pills nav-stacked">
+            {%  if contentCrawl == True %}
+                <li class="active"><a href="#">Your crawls</a></li>
+                <li><a href="{% url 'profile' requested_user.username 'review' %}">Your reviews</a></li>
+            {% else %}
+                <li><a href="{% url 'profile' requested_user.username 'crawl' %}">Your crawls</a></li>
+                <li class="active"><a href="#">Your reviews</a></li>
+            {% endif %}
+                <li><a href="{% url 'account_details' requested_user.username %}">Account details</a></li>
+            </ul>
+
+{% endblock %}
+
 {% block body_block %}
 	<div class="page-header">
         	<h1>{{ requested_user }}</h1>
 	</div>
-	<div>
-        <ul>Username: {{ requested_user.username }}</ul>
-	<ul>E-mail: {{ requested_user.email }}</ul>
+	<input type='hidden' id='current_page' />
+    <input type='hidden' id='show_per_page' />
 
-	{% if profile_exists = False %}
-		<ul><b>This user has not provided a profile yet.</b></ul>
+    <div class="container pull-left">
+        {% if crawls%}
+            {% for crawl in crawls|slice:":5" %}
+                <div class ="panel panel-default" id ='content'>
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><strong>{{ crawl.name }}</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3">
+                            <div class="row">
+                                <img src="/bootstrap/images/kittens.jpg" alt="Generic placeholder thumbnail"/>
+                            </div>
+                            <p>Rate This crawl:
+                                <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                                <a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+                            </p>
+                            <p>Costume: <span class="glyphicon glyphicon-ok"></span></p>
+                            <p>Drink: <span class="glyphicon glyphicon-remove"></span></p>
+                        </div>
+                        <div class="col-md-5">
+                            <strong>Description:</strong>
+                            <p>{{ crawl.description }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            {% for pub in crawl.pubs.all %}
+                                <a href="#">{{ pub.name }} > </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div id='page_navigation'></div>
         {% else %}
-                <ul>Website: <a href="{{ profile.website }}">{{ profile.website }}</a></ul>
-                <ul><img width="300" src="{{MEDIA_URL}}{{ profile.picture }}" alt="{{requested_user}}'s profile picture" /></ul>
+            <strong>There are no crawls present.</strong>
         {% endif %}
-        <br/>
-        {% if user = requested_user %}
-            <form role="form" action="{% url 'edit_profile' %}">
-                <ul><button class="btn btn-primary">Edit Profile</button></ul>
-            </form>
-        {% endif %}
+    </div>
 
-	
-	</div>
    
 {% endblock %}
