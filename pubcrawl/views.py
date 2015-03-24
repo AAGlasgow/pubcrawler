@@ -61,7 +61,7 @@ def index(request):
 
     return response
 
-	
+    
 def welcome(request):
     return render(request, 'pubcrawl/welcome.html')
 
@@ -321,78 +321,26 @@ def profile_list(request):
 def create_pubcrawl(request):
     return render(request, 'pubcrawl/create_pubcrawl.html')
 
-    
-##def register(request):
-##
-##    registered = False
-##
-##    if request.method == 'POST':
-##        user_form = UserForm(data=request.POST)
-##        profile_form = UserProfileForm(data=request.POST)
-##
-##        if user_form.is_valid() and profile_form.is_valid():
-##            user = user_form.save()
-##
-##            user.set_password(user.password)
-##            user.save()
-##
-##            profile = profile_form.save(commit=False)
-##            profile.user = user
-##
-##            if 'picture' in request.FILES:
-##                profile.picture = request.FILES['picture']
-##
-##            profile.save()
-##
-##            registered = True
-##
-##        else:
-##            print user_form.errors, profile_form.errors
-##
-##    
-##    else:
-##        user_form = UserForm()
-##        profile_form = UserProfileForm()
-##
-##    return render(request,
-##            'pubcrawl/register.html',
-##            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
-
-
-##def user_login(request):
-##
-##    if request.method == 'POST':
-##        username = request.POST['username']
-##        password = request.POST['password']
-##
-##
-##        user = authenticate(username=username, password=password)
-##
-##        if user:
-##            if user.is_active:
-##                login(request, user)
-##                return HttpResponseRedirect('/pubcrawl/')
-##            else:
-##                return HttpResponse("Your pubcrawl account is disabled.")
-##        else:
-##            print "Invalid login details: {0}, {1}".format(username, password)
-##            try:
-##                User.objects.get(username=username)
-##                return HttpResponse("Wrong password supplied.")
-##            except:
-##                return HttpResponse("Invalid username supplied.")
-##
-##    else:
-##        return render(request, 'pubcrawl/login.html', {})
-
 
 @login_required
 def restricted(request):
     return render(request, 'pubcrawl/restricted.html')
 
-##@login_required
-##def user_logout(request):
-##    logout(request)
-##    return HttpResponseRedirect('/pubcrawl/')
 
-    
+@login_required
+def rate_crawl(request):
+
+    crawl_id = None
+    if request.method == 'GET':
+        #crawl_id & crawl_rating are passed in via Ajax in HTTP.
+        crawl_id = request.GET['crawl_id']
+
+    score = 0
+    if crawl_id:
+        crawl = Crawl.objects.get(slug = crawl_id)
+        if crawl:
+			score = crawl.score + 1
+			crawl.score = score
+			crawl.save()
+
+    return HttpResponse(score)    

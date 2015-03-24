@@ -43,6 +43,7 @@ class Pub(models.Model):
 class Crawl(models.Model):
         creator = models.ForeignKey(User)
         positionCounter = 0
+        score = models.IntegerField(default=0)
         name = models.CharField(max_length=128)
         drink = models.BooleanField(default=False)
         drinkDescription = models.CharField(max_length=500)

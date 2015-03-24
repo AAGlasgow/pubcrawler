@@ -38,10 +38,7 @@
                             <div class="row">
                                 <img src="/bootstrap/images/kittens.jpg" alt="Generic placeholder thumbnail"/>
                             </div>
-                            <p>Rate This crawl: 
-                                <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-                                <a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-                            </p>
+                            <span><p id="score">Score: <span class="badge">{{ crawl.score }}</span</p></span>
                             <p>Costume: <span class="glyphicon glyphicon-ok"></span></p>
                             <p>Drink: <span class="glyphicon glyphicon-remove"></span></p>
                         </div>
@@ -62,4 +59,9 @@
             <strong>There are no crawls present.</strong>
         {% endif %}
     </div>
+{% endblock %}
+
+{% block javascript %}
+	<script src="{% static 'js/pubcrawler-ajax.js' %}"></script>
+	<script src="{% static 'js/pubcrawler-jquery.js' %}"></script>
 {% endblock %}
