@@ -30,10 +30,12 @@
         {% if crawls%}
             {% for crawl in crawls|slice:":5" %}
                 <div class ="panel panel-default" id ='content'>
-					<a href="#">
+
 					<div class="panel-heading">
+                            <a href="{% url 'crawl' crawl.slug %}">
                             <h3 class="panel-title"><strong>{{ crawl.name }}</strong></h3>
-				    </a>
+                            </a>
+				
                     </div>
                     <div class="panel-body">
                         <div class="col-md-3">

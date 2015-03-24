@@ -60,6 +60,9 @@
                             {% for r in reviews %}
                                 {% if r.crawl == crawl %}
                                 <br />
+                                {% if r.liked == True %}
+                                    <strong>LIKED</strong> <br />
+                                {% endif %}
                                 <strong>Review:</strong>
                                 <div>
                                     {{ r.text }}

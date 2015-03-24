@@ -348,4 +348,24 @@ def rate_crawl(request):
 			crawl.score = score
 			crawl.save()
 
-    return HttpResponse(score)    
+    return HttpResponse(score)
+
+
+def crawl(request, crawl_name):
+    context_dict = {}
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+            context_dict['result_list'] = run_query(query)
+
+    try:
+        crawl = Crawl.objects.get(slug=crawl_name)
+        context_dict['crawl_name'] = crawl.name
+        context_dict['crawl'] = crawl
+        context_dict['crawl_pub'] = Crawl_Pub.objects.order_by('crawl')
+    except Category.DoesNotExist:
+        pass
+
+
+    return render(request, 'pubcrawl/crawl.html', context_dict)
