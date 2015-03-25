@@ -381,8 +381,8 @@ def get_crawl_list(sort_by='name'):
 def crawl_list(request):
     context_dict = {}
 
-    #crawl_pub_list = Crawl_Pub.objects.order_by('position')
-    #context_dict['crawl_pub'] = crawl_pub_list
+    crawl_pub_list = Crawl_Pub.objects.order_by('position')
+    context_dict['crawl_pub'] = crawl_pub_list
 
     sort_by = "name"
     if request.method == "GET":

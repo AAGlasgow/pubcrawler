@@ -1,3 +1,4 @@
-div.row > div:nth-child(2){
+#results {
 	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
 }
