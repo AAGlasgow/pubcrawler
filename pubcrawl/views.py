@@ -371,21 +371,23 @@ def crawl(request, crawl_name):
 
 def get_crawl_list(sort_by='name'):
     crawl_list = []
-    if sort_by:
-        crawl_list = Crawl.objects.order_by(sort_by)
+    if sort_by == 'name':
+        crawl_list = Crawl.objects.order_by('name')
+    elif sort_by == 'score':
+        crawl_list = Crawl.objects.order_by('-score')
     
     return crawl_list
 
 def crawl_list(request):
     context_dict = {}
 
-    crawl_pub_list = Crawl_Pub.objects.order_by('position')
-    context_dict['crawl_pub'] = crawl_pub_list
-    
+    #crawl_pub_list = Crawl_Pub.objects.order_by('position')
+    #context_dict['crawl_pub'] = crawl_pub_list
+
     sort_by = "name"
     if request.method == "GET":
-        sort_by = request.GET("sort_by")
-    
+        sort_by = request.GET.get('sort_by')
+
     context_dict['crawls'] = get_crawl_list(sort_by)
     
     return render(request, 'pubcrawl/crawl_list.html', context_dict)
