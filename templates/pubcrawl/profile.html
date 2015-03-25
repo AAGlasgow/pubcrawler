@@ -42,14 +42,17 @@
             {% for crawl in crawls|slice:":5" %}
                 <div class ="panel panel-default" id ='content'>
                         <div class="panel-heading">
+                            <a href="{% url 'crawl' crawl.slug %}">
                             <h3 class="panel-title"><strong>{{ crawl.name }}</strong></h3>
+                            </a>
+
                     </div>
                     <div class="panel-body">
                         <div class="col-md-3">
                             <div class="row">
-                                <img src="/bootstrap/images/kittens.jpg" alt="Generic placeholder thumbnail"/>
+                                <img width="90" height="100" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
                             </div>
-                            <span><p id="score">Score: <span class="badge">{{ crawl.score }}</span</p></span>
+                            <span><p>Score: <span id="score" class="badge">{{ crawl.score }}</span</p></span>
                             <p>Costume: <span class="glyphicon glyphicon-ok"></span></p>
                             <p>Drink: <span class="glyphicon glyphicon-remove"></span></p>
                         </div>

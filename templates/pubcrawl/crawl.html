@@ -37,8 +37,24 @@
                             <div id="map-canvas" style="width: 100%; height: 300px;"></div>
 	                        <!--<input type="focus" id="pac-input" style="width:300px; height: 20px; margin-top: 16px;"></input>-->
 	                        <div id="placeid"></div>
+                            <br/>
                             <strong>Description:</strong>
                             <p>{{ crawl.description }}</p>
+                            <br/>
+                            <strong>Reviews:</strong>
+                            {% for review in reviews %}
+                            <br/>
+                            <br/>
+                            {{ review.user }}
+                            {% if review.liked == True %}
+                            LIKED
+                            {% endif %}
+                            <br/>
+                        {{review.text}}
+                        {% endfor %}
+
+
+
                         </div>
 						
                         <div class="col-md-3">
