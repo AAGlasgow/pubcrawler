@@ -1,14 +1,6 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from pubcrawl.models import Category
-from pubcrawl.models import Page
-from pubcrawl.models import Crawl
-from pubcrawl.models import Review
-from pubcrawl.models import UserProfile
-from pubcrawl.forms import CategoryForm
-from pubcrawl.forms import PageForm
-from pubcrawl.models import Crawl_Pub
+from pubcrawl.models import Crawl, Review, UserProfile, Crawl_Pub
 from pubcrawl.forms import UserForm, UserProfileForm
 from pubcrawl.bing_search import run_query
 from django.contrib.auth import authenticate, login
@@ -383,17 +375,26 @@ def crawl(request, crawl_name):
 
     return render(request, 'pubcrawl/crawl.html', context_dict)
 
-def crawl_list(request):
-    context_dict = {}
-    
-    if request.method == "GET":
-        sort_by = request.GET("sort_by")
-        
+def get_crawl_list(sort_by='name'):
+    crawl_list = []
     if sort_by:
         crawl_list = Crawl.objects.order_by(sort_by)
-        context_dict['crawls'] = crawl_list
-	
-	return render_to_response(request, 'pubcrawl/crawl_list.html', context_dict)
+    
+    return crawl_list
+
+def crawl_list(request):
+    context_dict = {}
+
+    crawl_pub_list = Crawl_Pub.objects.order_by('position')
+    context_dict['crawl_pub'] = crawl_pub_list
+    
+    sort_by = "name"
+    if request.method == "GET":
+        sort_by = request.GET("sort_by")
+    
+    context_dict['crawls'] = get_crawl_list(sort_by)
+    
+    return render(request, 'pubcrawl/crawl_list.html', context_dict)
 
         
     

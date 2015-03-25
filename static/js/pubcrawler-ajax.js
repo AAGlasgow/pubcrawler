@@ -8,12 +8,14 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('#sortby').click(function(){
-	    var sortby;
-		sortby = $(this).attr("data-sorttype");
-		$.get('/pubcrawl/crawl_list/', {sort_by: sortby}, function(data){
-		    $('#content').load(data);
-		});
-		$(this).addClass('active');
-	});
+	$('ul.nav.nav-pills li').click(function(){
+        var sortby;
+        sortby = $(this).attr("data-sorttype");
+        $.get('/pubcrawl/crawl_list/', {sort_by: sortby}, function(data){
+            $('#content').html(data);
+        });
+		
+        $('ul.nav-pills li.active').removeClass('active');
+        $(this).addClass('active');
+    });
 });
