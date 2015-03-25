@@ -39,15 +39,14 @@ $(document).ready(function() {
                     directionsDisplay.setMap(map);
                 
                     var start = coordinates[0];
-                    var finish = coordinates[coordinates.length - 1];
                     var waypts = [];
-                    coordinatesWaypoints = coordinates.slice(1, coordinates.length-1)
-                    for(i = 1; i < coordinates.length - 1; i++) {
+                    for(i = 1; i < coordinates.length; i++) {
                         waypts.push({location: coordinates[i], stopover: true});
                     }
+					
                     var request = {
                         origin: start,
-                        destination: finish,
+                        destination: start,
                         waypoints: waypts,
                         optimizeWaypoints: false,
                         travelMode: google.maps.TravelMode.WALKING
