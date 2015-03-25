@@ -11,15 +11,9 @@ from django.contrib.auth.models import User
 from datetime import datetime
 
 def index(request):
-   
-    category_list = Category.objects.order_by('-likes')[:5]
-    context_dict = {'categories': category_list}
-
-    page_list = Page.objects.order_by('-views')[:5]
-    context_dict['pages'] = page_list
 
     crawl_list = Crawl.objects.order_by('name')
-    context_dict['crawls'] = crawl_list
+    context_dict = {'crawls': crawl_list}
 
     review_list = Review.objects.order_by('crawl')
     context_dict['reviews'] = review_list

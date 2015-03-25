@@ -1,43 +1,46 @@
 {% load staticfiles %}
 
 {% if crawls %}
-		{% for crawl in crawls|slice:":3" %}
-			<div class ="panel panel-default">
+        {% for crawl in crawls|slice:":3" %}
+            <div class ="panel panel-default">
 
-				<div class="panel-heading">
-						<a href="{% url 'crawl' crawl.slug %}">
-						<h3 class="panel-title"><strong>{{ crawl.name }}</strong></h3>
-						</a>
+                <div class="panel-heading">
+                        <a href="{% url 'crawl' crawl.slug %}">
+                        <h3 class="panel-title"><strong>{{ crawl.name }}</strong></h3>
+                        </a>
 
-				</div>
-				<div class="panel-body">
-					<div class="col-md-3">
-						<div class="row">
-							<img width="90" height="100" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <img width="80" height="90" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
+                        </div>
+						
+						<div class="col-md-2">
+						    <p>Score: <span id="score" class="badge">{{ crawl.score }}</span></p>
+                            <p>Costume: <span class="glyphicon glyphicon-ok"></span></p>
+                            <p>Drink: <span class="glyphicon glyphicon-remove"></span></p>
 						</div>
-						<span><p>Score: <span id="score" class="badge">{{ crawl.score }}</span</p></span>
-						<p>Costume: <span class="glyphicon glyphicon-ok"></span></p>
-						<p>Drink: <span class="glyphicon glyphicon-remove"></span></p>
-					</div>
 
-					<div class="col-md-5">
-						<strong>Description:</strong>
-						<p>{{ crawl.description }}</p>
-					</div>
+                        <div class="col-md-5">
+                            <strong>Description:</strong>
+                            <p>{{ crawl.description }}</p>
+                        </div>
 
-					<div class="col-md-3">
-						{% for pub in crawl_pub %}
-							{% if pub.crawl == crawl %}
-								<a href="#">{{ pub.pub.name }} > </a>
-							{% endif %}
-						{% endfor %}
-					</div>
-				</div>
-			</div>
-		{% endfor %}
-		<div id='page_navigation'></div>
-	{% else %}
-		<strong>There are no crawls present.</strong>
+                        <div class="col-md-3">
+                            {% for pub in crawl_pub %}
+                                {% if pub.crawl == crawl %}
+                                    <a href="#">{{ pub.pub.name }} > </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div id='page_navigation'></div>
+    {% else %}
+        <strong>There are no crawls present.</strong>
 {% endif %}
 
 
