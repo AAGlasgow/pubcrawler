@@ -43,18 +43,17 @@
                             <br/>
                             <strong>Reviews:</strong>
                             {% for review in reviews %}
-                            <br/>
-                            <br/>
-                            {{ review.user }}
-                            {% if review.liked == True %}
-                            LIKED
-                            {% endif %}
-                            <br/>
-                        {{review.text}}
-                        {% endfor %}
-
-
-
+							    <div class ="panel panel-default">
+									<div class="panel-body">
+										<strong>@{{ review.user }}</strong>
+										{% if review.liked == True %}
+										LIKED
+										{% endif %}
+										<br/>
+										{{review.text}}
+									</div>
+								</div>
+							{% endfor %}
                         </div>
 						
                         <div class="col-md-3">

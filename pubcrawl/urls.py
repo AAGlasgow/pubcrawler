@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^create_pubcrawl/$', views.create_pubcrawl, name='create_pubcrawl'),
     url(r'^crawl/(?P<crawl_name>[\w\-]+)/?', views.crawl, name='crawl'),
 	url(r'^rate_crawl/$', views.rate_crawl, name='rate_crawl'),
+	url(r'^pubcrawl/crawl_list/$', views.crawl_list, name='crawl_list'),
     ) 
 
 

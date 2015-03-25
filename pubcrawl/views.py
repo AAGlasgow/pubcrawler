@@ -382,3 +382,20 @@ def crawl(request, crawl_name):
 
 
     return render(request, 'pubcrawl/crawl.html', context_dict)
+
+def crawl_list(request):
+    context_dict = {}
+    
+    if request.method == "GET":
+        sort_by = request.GET("sort_by")
+        
+    if sort_by:
+        crawl_list = Crawl.objects.order_by(sort_by)
+        context_dict['crawls'] = crawl_list
+	
+	return render_to_response(request, 'pubcrawl/crawl_list.html', context_dict)
+
+        
+    
+    
+    

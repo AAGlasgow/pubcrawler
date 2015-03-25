@@ -11,9 +11,10 @@
         </div>
         </div>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#">Name</a></li>
-                <li><a href="#">Score</a></li>
-                <li><a href="#">Comments</a></li>
+                <li id="sortby" class="btn btn-primary active" data-sorttype="name">Name</li>
+                <li id="sortby" class="btn btn-primary" data-sorttype="score">Score</li>
+				<!--Currently sorts by name-->
+                <li id="sortby" class="btn btn-primary" data-sorttype="name">Comments</li>
             </ul>
 
 {% endblock %}
@@ -26,7 +27,7 @@
   <input type='hidden' id='current_page' />
   <input type='hidden' id='show_per_page' />
 
-    <div class="container pull-left">
+    <div class="container pull-left" id ='content'>
         {% include 'pubcrawl/crawl_list.html' %}
     </div>
 {% endblock %}

@@ -7,4 +7,13 @@ $(document).ready(function(){
 				   $('#like').hide();
 		});
 	});
+	
+	$('#sortby').click(function(){
+	    var sortby;
+		sortby = $(this).attr("data-sorttype");
+		$.get('/pubcrawl/crawl_list/', {sort_by: sortby}, function(data){
+		    $('#content').load(data);
+		});
+		$(this).addClass('active');
+	});
 });

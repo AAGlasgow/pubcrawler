@@ -3,9 +3,9 @@
 {% load staticfiles %}
 
 <html>
-{% if crawls%}
-            {% for crawl in crawls|slice:":5" %}
-                <div class ="panel panel-default" id ='content'>
+	{% if crawls %}
+            {% for crawl in crawls|slice:":3" %}
+                <div class ="panel panel-default">
 
 					<div class="panel-heading">
                             <a href="{% url 'crawl' crawl.slug %}">
@@ -41,5 +41,5 @@
             <div id='page_navigation'></div>
         {% else %}
             <strong>There are no crawls present.</strong>
-        {% endif %}
+    {% endif %}
 </html>
