@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^crawl/(?P<crawl_name>[\w\-]+)/?', views.crawl, name='crawl'),
 	url(r'^rate_crawl/$', views.rate_crawl, name='rate_crawl'),
 	url(r'^crawl_list/$', views.crawl_list, name='crawl_list'),
+    url(r'^results/$', views.results, name='results'),
     ) 
 
 

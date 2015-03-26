@@ -2,6 +2,7 @@
 
 {% load pubcrawl_extras %}
 {% load staticfiles %}
+{% load tags %}
 
 <html lang="en">
   <head>
@@ -37,6 +38,15 @@
           <a class="navbar-brand" href="/pubcrawl/">Pubcrawl</a>
         </div>
         <div class="navbar-collapse collapse">
+          <form method="post" id="search" action="/pubcrawl/results/" role="search">
+            <div class="form-group">
+
+               {% searchbar query %}
+               <div id="search-results">
+               </div>
+
+            </div>
+          </form>
           <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'index' %}">Home</a></li>
                     {% if user.is_authenticated %}
