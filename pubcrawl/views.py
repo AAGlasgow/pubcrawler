@@ -338,7 +338,13 @@ def rate_crawl(request):
             user = request.user
             try:
                 review = Review.objects.get(user = user, crawl = crawl)
-                review.liked = True
+                if review.liked == True:
+                    review.liked = False
+                    score = crawl.score - 2
+                    crawl.score = score
+                    crawl.save()
+                else:
+                    review.liked = True
                 review.save()
             except:
                 review = Review.objects.create(user = user, crawl = crawl, liked = True)
