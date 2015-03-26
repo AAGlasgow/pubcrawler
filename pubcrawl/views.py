@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.db.models import Q
 
 def index(request):
 
@@ -432,40 +433,38 @@ def crawl_list(request):
     
     return render(request, 'pubcrawl/crawl_list.html', context_dict)
 
-def results(request,tag=""):
+def results(request,search_tag=""):
     result = []
+    context_dict = []
     if request.method == 'POST':
         search = request.POST['s']
     else:
-        search = tag
-    result = get_results(request, search)
-    context_dict = {'results': result['results'][:30], 'similar': result['similar'], 'query': search}
-    return render(request, 'results.html', context_dict)
+        search = search_tag
+    result = get_results(request, search) # Delivers a list of found stuff
+
+    context_dict = {'crawls': result}
+
+    review_list = Review.objects.order_by('crawl')
+    context_dict['reviews'] = review_list
+
+    crawl_pub_list = Crawl_Pub.objects.order_by('position')
+    context_dict['crawl_pub'] = crawl_pub_list
+
+    context_dict['search_tag'] = search
+
+    return render(request, 'pubcrawl/index.html', context_dict)
 
 
 def get_results(request, query):
     results = []
-    similar = False
     # Split the string to the list without spaces and commas
-    search = re.split(' |, |,', query)
-    search = filter(None, search)
-    if search != []:
-        first_term = search[0]
-        end_search = search[1:]
-        # Filter by first term
-        results = Recipe.objects.filter(Q(utilisedingredient__ingredient__name__icontains=first_term) | Q(name__icontains=first_term)).order_by('-avgrating').distinct()
-        # # Filter further if more than one word ingredient or name provided
-        # # order should preserve
-        for s in end_search:
-            results = results.filter(Q(utilisedingredient__ingredient__name__icontains=s) | Q(name__icontains=s))
-            # If no results exist, find similiar ones
-            # i.e. with at least one elemet from search input
-            if not results:
-                similar = True
-                search_regex = r'{0}'.format('|'.join(search))
-                results = Recipe.objects.filter(Q(utilisedingredient__ingredient__name__iregex=search_regex) | Q(name__regex=search_regex)).order_by('-avgrating').distinct()
-    context_dict = {'results': results[:30], 'similar': similar}
-    return context_dict
+    for crawl in Crawl.objects.filter(name__contains=query):
+        results.append(crawl)
+
+    for crawl_pub in Crawl_Pub.objects.filter(Q(pub__name__contains=query) | Q(pub__slug__contains=query)):
+        results.append(crawl_pub.crawl)
+
+    return results
 
         
     

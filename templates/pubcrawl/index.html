@@ -21,7 +21,11 @@
 
 {% block body_block %}
     <div class="page-header">
-	    <h1>Results</h1>
+        {% if search_tag %}
+            <h1>Results for {{ search_tag }}</h1>
+        {% else %}
+            <h1>Results</h1>
+        {% endif %}
     </div>
 
     <input type='hidden' id='current_page' />

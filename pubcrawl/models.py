@@ -36,7 +36,10 @@ class UserProfile(models.Model):
 class Pub(models.Model):
         placeID = models.CharField(max_length=256, unique=True)
         name = models.CharField(max_length=128)
-
+        slug = models.SlugField(unique=True)
+        def save(self, *args, **kwargs):
+            self.slug = slugify(self.name)
+            super(Pub, self).save(*args, **kwargs)
         def __unicode__(self):
                 return self.name
 
@@ -70,6 +73,7 @@ class Crawl_Pub(models.Model):
     pub = models.ForeignKey(Pub)
     crawl = models.ForeignKey(Crawl)
     position = models.IntegerField()
+
     def __unicode__(self):
         return self.crawl.__unicode__()+" "+self.pub.__unicode__()+" Position: "+unicode(self.position)
 
@@ -78,6 +82,7 @@ class Review(models.Model):
         crawl = models.ForeignKey(Crawl)
         liked = models.BooleanField(default=False)
         text = models.CharField(max_length=750)
+        dateTime = models.DateTimeField(auto_now=True)
 
         def __unicode__(self):
                 return self.text

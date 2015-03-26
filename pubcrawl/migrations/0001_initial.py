@@ -29,6 +29,7 @@ class Migration(migrations.Migration):
             name='Crawl',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('score', models.IntegerField(default=0)),
                 ('name', models.CharField(max_length=128)),
                 ('drink', models.BooleanField(default=False)),
                 ('drinkDescription', models.CharField(max_length=500)),
@@ -74,6 +75,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('placeID', models.CharField(unique=True, max_length=256)),
                 ('name', models.CharField(max_length=128)),
+                ('slug', models.SlugField(unique=True)),
             ],
             options={
             },
@@ -85,6 +87,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('liked', models.BooleanField(default=False)),
                 ('text', models.CharField(max_length=750)),
+                ('dateTime', models.DateTimeField(auto_now=True)),
                 ('crawl', models.ForeignKey(to='pubcrawl.Crawl')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],

@@ -30,7 +30,7 @@
                         <div class="col-md-3">
                             {% for pub in crawl_pub %}
                                 {% if pub.crawl == crawl %}
-                                    <a href="#">{{ pub.pub.name }} > </a>
+                                    <a href="{% url 'search' pub.pub.slug %}">{{ pub.pub.name }} > </a>
                                 {% endif %}
                             {% endfor %}
                         </div>

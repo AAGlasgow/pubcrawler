@@ -17,10 +17,11 @@ urlpatterns = patterns('',
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
     url(r'^profile_list/$', views.profile_list, name='profile_list'),
     url(r'^create_pubcrawl/$', views.create_pubcrawl, name='create_pubcrawl'),
-    url(r'^crawl/(?P<crawl_name>[\w\-]+)/?', views.crawl, name='crawl'),
+    url(r'^crawl/(?P<crawl_name>[\w\-]+)/$', views.crawl, name='crawl'),
 	url(r'^rate_crawl/$', views.rate_crawl, name='rate_crawl'),
 	url(r'^crawl_list/$', views.crawl_list, name='crawl_list'),
     url(r'^results/$', views.results, name='results'),
+    url(r'^results/(?P<search_tag>[\w\-]+)/$', views.results, name='search')
     ) 
 
 

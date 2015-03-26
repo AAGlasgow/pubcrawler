@@ -75,6 +75,11 @@ def add_crawl(creator, name, description, drink, drinkDescription, costume, cost
 
 def add_review(user, crawl, liked, text):
     r = Review(id=None, user=user, crawl=crawl, liked=liked, text=text)
+    if(liked):
+        c = Crawl.objects.get(slug=crawl.slug)
+        score = c.score+1
+        c.score = score
+        c.save()
     r.save()
     return r
 
