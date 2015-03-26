@@ -18,8 +18,8 @@
 						
 						<div class="col-md-2">
 						    <p>Score: <span id="score" class="badge">{{ crawl.score }}</span></p>
-                            <p>Costume: <span class="glyphicon glyphicon-ok"></span></p>
-                            <p>Drink: <span class="glyphicon glyphicon-remove"></span></p>
+                             <p>Costume: {% if crawl.costume %}<span class="glyphicon glyphicon-ok">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}</span></p>
+                             <p>Drink: {% if crawl.drink %}<span class="glyphicon glyphicon-ok">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}</span></p>
 						</div>
 
                         <div class="col-md-5" id="results">

@@ -34,8 +34,8 @@
                                     </button>
                                 {% endif %}
 							{% endif %}
-                            <p>Costume: <span class="glyphicon glyphicon-ok"></span></p>
-                            <p>Drink: <span class="glyphicon glyphicon-remove"></span></p>
+                            <p>Costume: {% if crawl.costume %}<span class="glyphicon glyphicon-ok">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}</span></p>
+                            <p>Drink: {% if crawl.drink %}<span class="glyphicon glyphicon-ok">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}</span></p>
                             <p>Creator: <a href="{% url 'profile' crawl.creator 'crawl' %}">{{ crawl.creator }}</a></p>
                         </div>
 						
@@ -50,13 +50,29 @@
                                         {{ crawl.description }}
                                     </div>
                                 </div>
+                            {% if crawl.costume %}
+                                <strong>Costume Description:</strong>
+                                <div class ="panel panel-default">
+									<div class="panel-body">
+                                        {{ crawl.costumeDescription }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if crawl.drink %}
+                                <strong>Drink Description:</strong>
+                                <div class ="panel panel-default">
+									<div class="panel-body">
+                                        {{ crawl.drinkDescription }}
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
 						
                         <div class="col-md-3">
                             <strong>Places:</strong><br/>
                             {% for pub in crawl_pub %}
                                 {% if pub.crawl == crawl %}
-                                    <a href="#">{{ pub.pub.name }} > </a>
+                                    <a href="{% url 'search' pub.pub.slug %}">{{ pub.pub.name }} > </a>
                                     <div class="pubID" style="display: none">{{pub.pub.placeID}}</div>
                                 {% endif %}
                             {% endfor %}

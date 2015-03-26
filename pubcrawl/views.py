@@ -371,7 +371,7 @@ def crawl(request, crawl_name):
         context_dict['start'] = pubs[0]
         context_dict['end'] = pubs[-1]
         context_dict['waypoints'] = pubs
-        context_dict['reviews'] = Review.objects.filter(crawl=crawl)
+        context_dict['reviews'] = Review.objects.filter(crawl=crawl).order_by('-dateTime')
         reload = False
         if request.method == 'POST':
             form = ReviewForm(request.POST)
