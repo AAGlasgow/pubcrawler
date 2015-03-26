@@ -36,6 +36,13 @@
     <div class="container pull-left" id ='content'>
         {% include 'pubcrawl/crawl_list.html' %}
     </div>
+    
+    <div class="container pull-left">
+        <ul class="pager">
+		  <li class="btn btn-default disabled" id="prev" value = "-5" >Previous</li>
+		  <li class="btn btn-default" id="next" value = "5" >Next</li>
+		</ul>
+    </div>
 {% endblock %}
 
 {% block javascript %}

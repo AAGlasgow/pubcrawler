@@ -413,14 +413,14 @@ def get_crawl_list(crawls, sort_by='name', start_at=0):
     crawl_list = []
     if sort_by == 'name':
         if crawls != None:
-            crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('name')[start_at:]
+            crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('name')[start_at:start_at+3]
         else:
             crawl_list = Crawl.objects.order_by('name')[start_at:]
     elif sort_by == 'score':
         if crawls != None:
-            crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('-score')[start_at:]
+            crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('-score')[start_at:start_at+3]
         else:
-            crawl_list = Crawl.objects.order_by('-score')[start_at:]
+            crawl_list = Crawl.objects.order_by('-score')[start_at:start_at+3]
     
     return crawl_list
 
@@ -435,6 +435,7 @@ def crawl_list(request):
     if request.method == "GET":
         sort_by = request.GET.get('sort_by')
         crawls = request.GET.getlist('crawls[]')
+        start_at = int(request.GET.get('start_at'))
     else:
         crawls = None
 
