@@ -310,7 +310,8 @@ def profile_list(request):
 
 
 def create_pubcrawl(request):
-    return render(request, 'pubcrawl/create_pubcrawl.html')
+    form = CrawlForm()
+    return render(request, 'pubcrawl/create_pubcrawl.html', {'form' : form})
 
 
 @login_required
