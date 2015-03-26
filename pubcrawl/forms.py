@@ -1,5 +1,5 @@
 from django import forms
-from pubcrawl.models import Page, Category, UserProfile
+from pubcrawl.models import Page, Category, UserProfile, Review
 from django.contrib.auth.models import User
 
 
@@ -42,3 +42,9 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('website', 'picture')
+
+class ReviewForm(forms.ModelForm):
+    text = forms.CharField(max_length=750, help_text="Enter your review here...", widget=forms.Textarea)
+    class Meta:
+        model = Review
+        fields = ('text',)

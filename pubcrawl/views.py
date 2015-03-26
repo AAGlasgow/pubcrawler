@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from pubcrawl.models import Crawl, Review, UserProfile, Crawl_Pub
-from pubcrawl.forms import UserForm, UserProfileForm
+from pubcrawl.forms import UserForm, UserProfileForm, ReviewForm
 from pubcrawl.bing_search import run_query
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
@@ -348,6 +348,7 @@ def rate_crawl(request):
 
 def crawl(request, crawl_name):
     context_dict = {}
+
     try:
         crawl = Crawl.objects.get(slug=crawl_name)
         context_dict['crawl_name'] = crawl.name
@@ -363,9 +364,42 @@ def crawl(request, crawl_name):
         context_dict['end'] = pubs[-1]
         context_dict['waypoints'] = pubs
         context_dict['reviews'] = Review.objects.filter(crawl=crawl)
+        if request.method == 'POST':
+            form = ReviewForm(request.POST)
+            if form.is_valid():
+                # Save the new category to the database.
+                # Now call the index() view.
+                # The user will be shown the homepage.
+                field = form.fields['text']
+                data = field.widget.value_from_datadict(form.data, form.files, form.add_prefix('text'))
+                try:
+                    review = Review.objects.get(user = request.user, crawl = crawl)
+                    review.text = field.clean(data)
+                    review.save()
+                except:
+                    review = Review.objects.create(user = request.user, crawl = crawl, liked = False, text=field.clean(data))
+                    review.save()
+                return index(request)
+            else:
+                # The supplied form contained errors - just print them to the terminal.
+                print form.errors
+        else:
+            form = ReviewForm()
+            #form.crawl = crawl
+            #form.user = request.user
+        try:
+            user_review = Review.objects.filter(crawl=crawl, user=request.user)
+            context_dict['user_review'] = user_review
+            form.fields['text'] = user_review.text
+            #form.liked = user_review.liked
+        except:
+            pass
     except Crawl.DoesNotExist:
         pass
 
+
+
+    context_dict['form'] = form
 
     return render(request, 'pubcrawl/crawl.html', context_dict)
 

@@ -20,14 +20,19 @@
 					
                         <div class="col-md-3">
                             <div class="row">
-                                <img width="120" height="140" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
+                                <img width="90" height="100" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
                             </div>
-							<br />
-                            <span><p>Score: <span id="score" class="badge">{{ crawl.score }}</span</p></span>
+                            <span><p>Score: <span id="score" class="badge">{{ crawl.score }}</span></p></span>
 							{% if user.is_authenticated %}
-								<button id="like" data-crawlid="{{ crawl.slug }}" class="btn btn-primary" type="button">
-									<span class="glyphicon glyphicon-thumbs-up"></span>
-								</button>
+                                {% if user_review and user_review.0.liked %}
+                                    <button id="like" data-crawlid="{{ crawl.slug }}" class="btn btn-primary" type="button" style="background-color: green">
+                                        <span class="glyphicon glyphicon-thumbs-up" ></span>
+                                    </button>
+                                {% else %}
+                                    <button id="like" data-crawlid="{{ crawl.slug }}" class="btn btn-primary" type="button">
+                                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                                    </button>
+                                {% endif %}
 							{% endif %}
                             <p>Costume: <span class="glyphicon glyphicon-ok"></span></p>
                             <p>Drink: <span class="glyphicon glyphicon-remove"></span></p>
@@ -36,23 +41,15 @@
 						
                         <div class="col-md-5">
                             <div id="map-canvas" style="width: 100%; height: 300px;"></div>
+	                        <!--<input type="focus" id="pac-input" style="width:300px; height: 20px; margin-top: 16px;"></input>-->
+	                        <div id="placeid"></div>
                             <br/>
                             <strong>Description:</strong>
-                            <p>{{ crawl.description }}</p>
-                            <br/>
-                            <strong>Reviews:</strong>
-                            {% for review in reviews %}
-							    <div class ="panel panel-default">
+                            <div class ="panel panel-default">
 									<div class="panel-body">
-										<strong>@{{ review.user }}</strong>
-										{% if review.liked == True %}
-										LIKED
-										{% endif %}
-										<br/>
-										{{review.text}}
-									</div>
-								</div>
-							{% endfor %}
+                                        {{ crawl.description }}
+                                    </div>
+                                </div>
                         </div>
 						
                         <div class="col-md-3">
@@ -63,6 +60,55 @@
                                     <div class="pubID" style="display: none">{{pub.pub.placeID}}</div>
                                 {% endif %}
                             {% endfor %}
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="panel-body">
+                        <div class="col-md-3">
+
+                        </div>
+
+                        <div class="col-md-5">
+                            <strong>Reviews:</strong>
+                            <br/>
+                            <br/>
+                            {% for review in reviews %}
+                                {% if review.text != "" %}
+							    <div class ="panel panel-default">
+									<div class="panel-body">
+										<a href="{% url 'profile' review.user 'crawl' %}"><strong>@{{ review.user }}</strong></a>
+										{% if review.liked == True %}
+										likes this crawl
+										{% endif %}
+										<br/>
+										{{review.text}}
+									</div>
+								</div>
+                                {% endif %}
+							{% endfor %}
+                        </div>
+
+                        <div class="col-md-3">
+                            {% if user.is_authenticated %}
+                                <strong>Your Review:</strong>
+                                <form role="form"  id="review_form" method="post" action="{% url 'crawl' crawl.slug %}">
+                                    <div style="vertical-align: bottom" class="panel-body">
+			                            {% csrf_token %}
+			                            {% for hidden in form.hidden_fields %}
+				                            {{ hidden }}
+			                            {% endfor %}
+
+			                            {% for field in form.visible_fields %}
+				                            {{ field.errors }}
+                                            {{ field }}
+			                            {% endfor %}
+			                            <button class="btn btn-primary" type="submit" name="submit">Create/Update Review</button>
+                                    </div>
+		                        </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
