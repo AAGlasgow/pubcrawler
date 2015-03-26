@@ -38,19 +38,16 @@
           <a class="navbar-brand" href="/pubcrawl/">Pubcrawl</a>
         </div>
         <div class="navbar-collapse collapse">
-          <form method="post" id="search" action="/pubcrawl/results/" role="search">
-            <div class="form-group">
-
-               {% searchbar query %}
-               <div id="search-results">
-               </div>
-
-            </div>
-          </form>
-          <ul class="nav navbar-nav navbar-right">
+            <form method="post" id="search" action="/pubcrawl/results/" role="search">
+				<div class="form-group">
+				   {% searchbar query %}
+				   <div id="search-results">
+				   </div>
+				</div>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'index' %}">Home</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
                         <li><a href="{% url 'create_pubcrawl' %}">Create a crawl</a></li>
                         <li><a href="{% url 'profile_list' %}">User profiles</a></li>
                         <li><a href="{% url 'auth_logout' %}?next=/">Logout</a></li>

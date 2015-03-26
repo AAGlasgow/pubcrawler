@@ -38,7 +38,10 @@
                 </div>
             </div>
         {% endfor %}
-        <div id='page_navigation'></div>
+        <ul class="pager">
+		  <li class="btn btn-default disabled" id="prev" value = "-5" >Previous</li>
+		  <li class="btn btn-default" id="next" value = "5" >Next</li>
+		</ul>
     {% else %}
         <strong>There are no crawls present.</strong>
 {% endif %}

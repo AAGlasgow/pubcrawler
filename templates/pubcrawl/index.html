@@ -20,12 +20,11 @@
 {% endblock %}
 
 {% block body_block %}
-  <div class="page-header">
-    <h1>Results</h1>
-  </div>
+    <div class="page-header">
+	    <h1>Results</h1>
+    </div>
 
-  <input type='hidden' id='current_page' />
-  <input type='hidden' id='show_per_page' />
+    <input type='hidden' id='current_page' />
 
     <div class="container pull-left" id ='content'>
         {% include 'pubcrawl/crawl_list.html' %}
@@ -34,5 +33,4 @@
 
 {% block javascript %}
 	<script src="{% static 'js/pubcrawler-ajax.js' %}"></script>
-	<script src="{% static 'js/pubcrawler-jquery.js' %}"></script>
 {% endblock %}
