@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from pubcrawl.models import Crawl, Review, UserProfile, Crawl_Pub
-from pubcrawl.forms import UserForm, UserProfileForm, ReviewForm
+from pubcrawl.forms import UserForm, UserProfileForm, ReviewForm, CrawlForm
 from pubcrawl.bing_search import run_query
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
