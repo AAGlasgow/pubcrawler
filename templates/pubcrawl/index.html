@@ -15,6 +15,9 @@
                 <li class="btn btn-primary" data-sorttype="score">Score</li>
 				<!--Currently sorts by name-->
                 <li class="btn btn-primary" data-sorttype="name">Comments</li>
+                {% for crawl in crawls %}
+                    <div class="hiddenCrawls" style="display: none">{{crawl.slug}}</div>
+                {% endfor %}
             </ul>
 
 {% endblock %}

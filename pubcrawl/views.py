@@ -409,12 +409,18 @@ def crawl(request, crawl_name):
 
     return render(request, 'pubcrawl/crawl.html', context_dict)
 
-def get_crawl_list(sort_by='name', start_at=0):
+def get_crawl_list(crawls, sort_by='name', start_at=0):
     crawl_list = []
     if sort_by == 'name':
-        crawl_list = Crawl.objects.order_by('name')[start_at:]
+        if crawls != None:
+            crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('name')[start_at:]
+        else:
+            crawl_list = Crawl.objects.order_by('name')[start_at:]
     elif sort_by == 'score':
-        crawl_list = Crawl.objects.order_by('-score')[start_at:]
+        if crawls != None:
+            crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('-score')[start_at:]
+        else:
+            crawl_list = Crawl.objects.order_by('-score')[start_at:]
     
     return crawl_list
 
@@ -428,8 +434,11 @@ def crawl_list(request):
     start_at = 0
     if request.method == "GET":
         sort_by = request.GET.get('sort_by')
+        crawls = request.GET.getlist('crawls[]')
+    else:
+        crawls = None
 
-    context_dict['crawls'] = get_crawl_list(sort_by, start_at)
+    context_dict['crawls'] = get_crawl_list(crawls, sort_by, start_at)
     
     return render(request, 'pubcrawl/crawl_list.html', context_dict)
 

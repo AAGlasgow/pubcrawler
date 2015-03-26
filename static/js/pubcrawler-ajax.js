@@ -12,7 +12,12 @@ $(document).ready(function(){
 	$('ul.nav.nav-pills li').click(function(){
         var sortby;
         sortby = $(this).attr("data-sorttype");
-        $.get('/pubcrawl/crawl_list/', {sort_by: sortby}, function(data){
+        var crawl = $(".hiddenCrawls");
+        var crawls = [];
+        for (i=0; i < crawl.length; i++ ) {
+            crawls.push(crawl[i].innerHTML.toString());
+        }
+        $.get('/pubcrawl/crawl_list/', {sort_by: sortby, crawls: crawls}, function(data){
             $('#content').html(data);
         });
 		
