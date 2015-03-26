@@ -364,6 +364,7 @@ def crawl(request, crawl_name):
         context_dict['end'] = pubs[-1]
         context_dict['waypoints'] = pubs
         context_dict['reviews'] = Review.objects.filter(crawl=crawl)
+        reload = False
         if request.method == 'POST':
             form = ReviewForm(request.POST)
             if form.is_valid():
@@ -379,27 +380,24 @@ def crawl(request, crawl_name):
                 except:
                     review = Review.objects.create(user = request.user, crawl = crawl, liked = False, text=field.clean(data))
                     review.save()
-                return index(request)
             else:
                 # The supplied form contained errors - just print them to the terminal.
-                print form.errors
+                reload = True
         else:
-            form = ReviewForm()
-            #form.crawl = crawl
-            #form.user = request.user
+            reload = True
         try:
-            user_review = Review.objects.filter(crawl=crawl, user=request.user)
+            user_review = Review.objects.get(crawl=crawl, user=request.user)
             context_dict['user_review'] = user_review
-            form.fields['text'] = user_review.text
-            #form.liked = user_review.liked
+            form = ReviewForm(initial={'text': user_review.text})
         except:
-            pass
+            form = ReviewForm()
     except Crawl.DoesNotExist:
         pass
 
-
-
-    context_dict['form'] = form
+    if reload:
+        context_dict['form'] = form
+    else:
+        context_dict['form'] = None
 
     return render(request, 'pubcrawl/crawl.html', context_dict)
 

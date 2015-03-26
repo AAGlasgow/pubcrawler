@@ -24,7 +24,7 @@
                             </div>
                             <span><p>Score: <span id="score" class="badge">{{ crawl.score }}</span></p></span>
 							{% if user.is_authenticated %}
-                                {% if user_review and user_review.0.liked %}
+                                {% if user_review and user_review.liked %}
                                     <button id="like" data-crawlid="{{ crawl.slug }}" class="btn btn-primary" type="button" style="background-color: green">
                                         <span class="glyphicon glyphicon-thumbs-up" ></span>
                                     </button>
