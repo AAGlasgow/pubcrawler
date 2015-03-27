@@ -114,9 +114,9 @@ $(function(){
 });
 
 function updatePubList() {
-	var htmlString = "<ul>";
+	var htmlString = "<ul class=\"list-group\">";
 	for(i = 0; i < pubList.length; i++) {
-		htmlString = htmlString.concat("<li>"+nameList[i]+"</li>");
+		htmlString = htmlString.concat("<li class=\"list-group-item\">"+nameList[i]+"</li>");
 	}
 	htmlString.concat('</ul>');
 	$('#pubList').html(htmlString);
