@@ -19,24 +19,29 @@
                     <div class="panel-body">
 					
                         <div class="col-md-3">
-                            <div class="row">
-                                <img width="90" height="100" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
-                            </div>
-                            <span><p>Score: <span id="score" class="badge">{{ crawl.score }}</span></p></span>
-							{% if user.is_authenticated %}
-                                {% if user_review and user_review.liked %}
-                                    <button id="like" data-crawlid="{{ crawl.slug }}" class="btn btn-primary" type="button" style="background-color: green">
-                                        <span class="glyphicon glyphicon-thumbs-up" ></span>
-                                    </button>
-                                {% else %}
-                                    <button id="like" data-crawlid="{{ crawl.slug }}" class="btn btn-primary" type="button">
-                                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                                    </button>
+                            <div class="panel-body">
+                                <img width="150" height="190" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
+                            
+                                <p>Score: <span id="score" class="badge">{{ crawl.score }}</span></p>
+                                {% if user.is_authenticated %}
+                                    {% if user_review and user_review.liked %}
+                                        <button id="like" data-crawlid="{{ crawl.slug }}" class="btn btn-primary" type="button" style="background-color: green">
+                                            <span class="glyphicon glyphicon-thumbs-up" ></span>
+                                        </button>
+                                    {% else %}
+                                        <button id="like" data-crawlid="{{ crawl.slug }}" class="btn btn-primary" type="button">
+                                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                                        </button>
+                                    {% endif %}
                                 {% endif %}
-							{% endif %}
-                            <p>Costume: {% if crawl.costume %}<span class="glyphicon glyphicon-ok">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}</span></p>
-                            <p>Drink: {% if crawl.drink %}<span class="glyphicon glyphicon-ok">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}</span></p>
-                            <p>Creator: <a href="{% url 'profile' crawl.creator 'crawl' %}">{{ crawl.creator }}</a></p>
+                                
+                                <br />
+                                <br />
+                                <p>Costume: {% if crawl.costume %}<span class="glyphicon glyphicon-ok">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}</span></p>
+                                <p>Drink: {% if crawl.drink %}<span class="glyphicon glyphicon-ok">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}</span></p>
+                                <br />
+                                <p>Creator: <a href="{% url 'profile' crawl.creator 'crawl' %}">{{ crawl.creator }}</a></p>
+                            </div>
                         </div>
 						
                         <div class="col-md-5">
