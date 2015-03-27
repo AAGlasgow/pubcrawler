@@ -8,38 +8,37 @@
 <!--#### Could Redirect users to index if authenticated ####-->
 
 {% block all_block %}
-	<div class="jumbotron">
-	    <div class="container">
-		    <h1>Find the pubcrawl for your night out!</h1>
-			<p>A tool for finding great pubcrawls and creating your own!</p>
-	    </div>
-		<div class="container">
-		    <form method="post" id="search" action="/pubcrawl/results/" role="search">
-				<div class="form-group input-group-lg">
-				   {% searchbar query %}
-				</div>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Find the pubcrawl for your night out!</h1>
+            <p>A tool for finding great pubcrawls and creating your own!</p>
+        </div>
+        <div class="container">
+            <form method="post" id="search" action="/pubcrawl/results/" role="search">
+                <div class="form-group input-group-lg">
+                   {% searchbar query %}
+                </div>
             </form>
-		</div>
-	</div>
-	
-	<div class="container" id="welcome_text">
-	    <div class="row">
-		    <!--##### Search functionality goes here #####-->
-		</div>
-		
-	    <div class="row">
-		    <div class="col-md-4">
-			    <h1>1.Choose a place</h1>
-				<h4><strong>The city or bar where you want to crawl.</strong></h4>
-			</div>
-		    <div class="col-md-4">
-			    <h1>2.Click Find Pubcrawl</h1>
-				<h4><strong>Click or hit enter to begin!</strong></h4>
-			</div>
-			<div class="col-md-4">
-			    <h1>3.Profit $$$</h1>
-				<h4><strong>Many pubcrawls, such liver failure, Wow.</strong></h4>
+        </div>
+    </div>
+    
+    <div class="container" id="welcome_text">
+        <div class="row">
+            <!--##### Search functionality goes here #####-->
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <h1>1.Choose a place</h1>
+                <h4><strong>The city or bar where you want to crawl.</strong></h4>
             </div>
-		</div>	
- 
+            <div class="col-md-4">
+                <h1>2.Click Find Pubcrawl</h1>
+                <h4><strong>Click or hit enter to begin!</strong></h4>
+            </div>
+            <div class="col-md-4">
+                <h1>3.Profit $$$</h1>
+                <h4><strong>Many pubcrawls, such liver failure, Wow.</strong></h4>
+            </div>
+        </div>	
 {% endblock %}
