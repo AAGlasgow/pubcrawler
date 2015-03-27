@@ -24,13 +24,13 @@
 					
 						{% csrf_token %}
 						<ul class="list-group">
-						{% for field in form.visible_fields %}
-							{{ field.errors }}
-							<li class="list-group-item">
-								{{ field.errors }}
-								{{ field.help_text }} {{ field }}
-							</li>
-						{% endfor %}
+							<li class="list-group-item">{{ form.name.errors }}Crawl name: {{ form.name }} </li>
+							<li class="list-group-item">{{ form.drink.errors }} Drink? {{ form.drink }} </li>
+							<li id="drinks" class="list-group-item">{{ form.drinkDescription.errors }}Specify: {{ form.drinkDescription }} </li>
+							<li class="list-group-item">{{ form.costume.errors }}Costume? {{ form.costume }} </li>
+							<li id="costumes" class="list-group-item">{{ form.costumeDescription.errors }}Specify: {{ form.costumeDescription }} </li>
+							<li class="list-group-item">{{ form.description.errors }}Describe the crawl: {{ form.description }} </li>
+							<li class="list-group-item">{{ form.picture.errors }}Upload a picture? {{ form.picture }} </li>
 						</ul>
 						<select multiple="multiple" id="id_pubs" name="pubid" style="display: none">
 						</select>

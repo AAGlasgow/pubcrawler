@@ -91,21 +91,24 @@ $(function(){
 			updatePubList();
 		});
 
+		$('#drinks').hide();
+		$('#costumes').hide();
+
 		$('#id_drink').change(function() {
 			if(this.checked) {
-				$('#id_drinkDescription').fadeIn('slow');
+				$('#drinks').fadeIn('slow');
 			}	
 			else {
-				$('#id_drinkDescription').fadeOut('slow');
+				$('#drinks').fadeOut('slow');
 			}
 		});
 
 		$('#id_costume').change(function() {
 			if(this.checked) {
-				$('#id_costumeDescription').fadeIn('slow');
+				$('#costumes').fadeIn('slow');
 			}
 			else {
-				$('#id_costumeDescription').fadeOut('slow');
+				$('#costumes').fadeOut('slow');
 			}
 		});
 });

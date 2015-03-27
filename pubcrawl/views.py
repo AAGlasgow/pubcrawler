@@ -305,7 +305,7 @@ def create_pubcrawl(request):
 
     else:
         form = CrawlForm()
-        return render(request, 'pubcrawl/create_pubcrawl.html', {'form' : form})
+    return render(request, 'pubcrawl/create_pubcrawl.html', {'form' : form})
 
 
 @login_required

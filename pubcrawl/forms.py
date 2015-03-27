@@ -51,9 +51,9 @@ class ReviewForm(forms.ModelForm):
 
 class CrawlForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Name of the crawl: ")
-    drink = forms.BooleanField(initial=False, help_text="Drink?")
+    drink = forms.BooleanField(initial=False, help_text="Drink?", required=False)
     drinkDescription = forms.CharField(max_length=500, required=False)
-    costume = forms.BooleanField(initial=False, help_text="Cotume?")
+    costume = forms.BooleanField(initial=False, help_text="Cotume?", required=False)
     costumeDescription = forms.CharField(max_length=500, required=False)
     description = forms.CharField(max_length=500,help_text="Crawl desciption: ")
     picture = forms.ImageField(help_text="Upload a picture", required=False)
