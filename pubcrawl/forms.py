@@ -1,5 +1,5 @@
 from django import forms
-from pubcrawl.models import Page, Category, UserProfile, Review, Crawl
+from pubcrawl.models import Page, Category, UserProfile, Review, Crawl, Pub
 from django.contrib.auth.models import User
 
 
@@ -52,9 +52,9 @@ class ReviewForm(forms.ModelForm):
 class CrawlForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Name of the crawl: ")
     drink = forms.BooleanField(initial=False, help_text="Drink?")
-    drinkDescription = forms.CharField(max_length=500, help_text="description")
+    drinkDescription = forms.CharField(max_length=500, help_text="description", required=False)
     costume = forms.BooleanField(initial=False, help_text="Cotume?")
-    costumeDescription = forms.CharField(max_length=500, help_text="description")
+    costumeDescription = forms.CharField(max_length=500, help_text="description", required=False)
     description = forms.CharField(max_length=500,help_text="Crawl desciption: ")
     picture = forms.ImageField(help_text="Upload a picture", required=False)
     class Meta:

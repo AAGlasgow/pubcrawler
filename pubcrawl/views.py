@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from pubcrawl.models import Crawl, Review, UserProfile, Crawl_Pub
+from pubcrawl.models import Crawl, Review, UserProfile, Crawl_Pub, Pub
 from pubcrawl.forms import UserForm, UserProfileForm, ReviewForm, CrawlForm
 from pubcrawl.bing_search import run_query
 from django.contrib.auth import authenticate, login
@@ -265,9 +265,42 @@ def profile_list(request):
     return render(request, 'pubcrawl/profile_list.html', context_dict)
 
 
+@login_required
 def create_pubcrawl(request):
-    form = CrawlForm()
-    return render(request, 'pubcrawl/create_pubcrawl.html', {'form' : form})
+    if(request.method == 'POST'):
+        name=request.POST['name']
+        creator=request.user
+        description=request.POST['description']
+        try:
+            drink=request.POST['drink']
+        except Exception, e:
+            drink=False
+        drinkDescription=request.POST['drinkDescription']
+        try:
+            costume=request.POST['costume']
+        except Exception, e:
+            costume=False
+        costumeDescription=request.POST['costumeDescription']
+        c = Crawl(  name=name, 
+                    creator=creator,    description=description,
+                    drink=drink,        drinkDescription=drinkDescription, 
+                    costume=costume,    costumeDescription=costumeDescription)
+        c.save()
+        pubs = request.POST.getlist('pubid')
+        for pub in pubs:
+            place = pub.split('+')
+            print(len(place))
+            print(place)
+            print(place[0],place[1])
+            if not Pub.objects.filter(placeID=place[0]).exists():
+                p = Pub(name=place[1], placeID=place[0])
+                p.save()
+            p = Pub.objects.get(placeID=place[0])
+            c.add_pub(p)
+        return render(request, 'pubcrawl/index.html')
+    else:
+        form = CrawlForm()
+        return render(request, 'pubcrawl/create_pubcrawl.html', {'form' : form})
 
 
 @login_required

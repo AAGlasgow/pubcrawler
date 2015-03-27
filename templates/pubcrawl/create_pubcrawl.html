@@ -6,7 +6,7 @@
 
 {% block body_block %}
 
-	<div id="map-canvas" style="width: 800px; height: 600px;"></div>
+	<div id="map-canvas" style="width: 400px; height: 300px;"></div>
 	<input type="focus" id="pac-input" style="width:300px; height: 20px; margin-top: 16px;"></input>
 	<div id="placeid"></div>
 	<button id="addPub" class="btn btn-primary">Add Pub</button>
@@ -15,15 +15,15 @@
 		<form role="form"  id="page_form" method="post" action="/pubcrawl/create_pubcrawl/">
 		
 			{% csrf_token %}
-			{% for hidden in form.hidden_fields %}
-				{{ hidden }}
-			{% endfor %}
 			
 			{% for field in form.visible_fields %}
 				{{ field.errors }}
 				{{ field.help_text }}
 				{{ field }}<br /><br />
 			{% endfor %}
+
+			<select multiple="multiple" id="id_pubs" name="pubid">
+			</select>
 			
 			<button class="btn btn-primary" type="submit" name="submit">Create Crawl</button>
 		</form>

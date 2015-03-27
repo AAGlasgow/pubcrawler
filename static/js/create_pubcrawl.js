@@ -1,10 +1,13 @@
 //list of pubs for the crawl 
-	var pubList =[];	
+	var pubList =[];
+	var nameList =[];
+	var placeID = "";
+	var placeName;
 
 $(function(){
 
 
-	var placeID = "";
+	
 	//map options for Glasgow
 	var mapOptions = {
 			center: {lat: 55.8580, lng: -4.2590},
@@ -61,6 +64,7 @@ $(function(){
 					place.formatted_address);
 			infowindow.open(map, marker);
 			//display the placeID at the bottom of the map
+			placeName = place.name;
 			placeID = place.place_id;
 			$('#placeid').text("Place ID: " + place.place_id);
 		});
@@ -70,8 +74,8 @@ $(function(){
 				alert("Please search for a place from the map");
 				return;
 			}
-			if(pubList.length === 8) {
-				alert("Sorry, you can't have more than 8 pubs in a crawl");
+			if(pubList.length === 9) {
+				alert("Sorry, you can't have more than 9 pubs in a crawl");
 				return;
 			}
 			for(i=0; i < pubList.length; i++) {
@@ -82,15 +86,44 @@ $(function(){
 			}
 
 			pubList.push(placeID);
+			nameList.push(placeName);
+			addToList();
 			updatePubList();
+		});
+
+		$('#id_drink').change(function() {
+			if(this.checked) {
+				$('#id_drinkDescription').fadeIn('slow');
+			}	
+			else {
+				$('#id_drinkDescription').fadeOut('slow');
+			}
+		});
+
+		$('#id_costume').change(function() {
+			if(this.checked) {
+				$('#id_costumeDescription').fadeIn('slow');
+			}
+			else {
+				$('#id_costumeDescription').fadeOut('slow');
+			}
 		});
 });
 
 function updatePubList() {
 	var htmlString = "<ul>";
 	for(i = 0; i < pubList.length; i++) {
-		htmlString = htmlString.concat("<li>"+pubList[i]+"</li>");
+		htmlString = htmlString.concat("<li>"+nameList[i]+"</li>");
 	}
 	htmlString.concat('</ul>');
 	$('#pubList').html(htmlString);
 }
+
+function addToList () {
+	$("#id_pubs").append("<option value='"+placeID+"+"+placeName+"'></option>");
+	$('#id_pubs option').prop('selected', true);
+}
+// function removeFromList() {
+// 	$("#id_pubs option:last").remove();
+// 	$("#id_names option:last").remove();
+// }
