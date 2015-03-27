@@ -52,51 +52,6 @@ def index(request):
 def welcome(request):
     return render(request, 'pubcrawl/welcome.html')
 
-def category(request, category_name_slug):
-
-    
-    context_dict = {}
-
-    if request.method == 'POST':
-        query = request.POST['query'].strip()
-
-        if query:
-            context_dict['result_list'] = run_query(query)
-
-    try:
-        
-        category = Category.objects.get(slug=category_name_slug)
-        context_dict['category_name'] = category.name
-
-        
-        pages = Page.objects.filter(category=category)
-
-        
-        context_dict['pages'] = pages
-        
-        context_dict['category'] = category
-    except Category.DoesNotExist:
-        
-        pass
-
-    
-    return render(request, 'pubcrawl/category.html', context_dict)
-
-@login_required
-def add_category(request):
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-
-        if form.is_valid():
-            form.save(commit=True)
-            return index(request)
-        else:
-            print form.errors
-
-    else:
-        form = CategoryForm()
-
-    return render(request, 'pubcrawl/add_category.html', {'form': form})
 
 @login_required
 def add_page(request, category_name_slug):
@@ -316,11 +271,6 @@ def create_pubcrawl(request):
 
 
 @login_required
-def restricted(request):
-    return render(request, 'pubcrawl/restricted.html')
-
-
-@login_required
 def rate_crawl(request):
 
     crawl_id = None
@@ -411,16 +361,30 @@ def crawl(request, crawl_name):
 
 def get_crawl_list(crawls, sort_by='name', start_at=0):
     crawl_list = []
+    
     if sort_by == 'name':
         if crawls != None:
             crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('name')[start_at:start_at+4]
         else:
             crawl_list = Crawl.objects.order_by('name')[start_at:start_at+4]
+            
     elif sort_by == 'score':
         if crawls != None:
             crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('-score')[start_at:start_at+4]
         else:
             crawl_list = Crawl.objects.order_by('-score')[start_at:start_at+4]
+            
+    elif sort_by == 'creator':
+        if crawls != None:
+            crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('creator')[start_at:start_at+4]
+        else:
+            crawl_list = Crawl.objects.order_by('creator')[start_at:start_at+4]
+            
+    elif sort_by == 'dateTime':
+        if crawls != None:
+            crawl_list = Crawl.objects.filter(slug__in=crawls).order_by('dateTime')[start_at:start_at+4]
+        else:
+            crawl_list = Crawl.objects.order_by('dateTime')[start_at:start_at+4]
     
     return crawl_list
 

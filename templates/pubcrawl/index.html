@@ -14,7 +14,8 @@
                 <li class="btn btn-primary active" data-sorttype="name">Name</li>
                 <li class="btn btn-primary" data-sorttype="score">Score</li>
 				<!--Currently sorts by name-->
-                <li class="btn btn-primary" data-sorttype="name">Comments</li>
+                <li class="btn btn-primary" data-sorttype="creator">Creator</li>
+                <li class="btn btn-primary" data-sorttype="dateTime">Date Added</li>
                 {% for crawl in crawls %}
                     <div class="hiddenCrawls" style="display: none">{{crawl.slug}}</div>
                 {% endfor %}
