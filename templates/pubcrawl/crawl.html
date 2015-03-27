@@ -20,7 +20,11 @@
 					
                         <div class="col-md-3">
                             <div class="panel-body">
-                                <img width="150" height="190" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
+                                {% if crawl.picture %}
+                                    <img width="80" height="90" src="{{MEDIA_URL}}{{ crawl.picture }}" alt="Generic placeholder thumbnail"/>
+                                {% else %}
+                                    <img width="80" height="90" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
+                                {% endif %}
                             
                                 <p>Score: <span id="score" class="badge">{{ crawl.score }}</span></p>
                                 {% if user.is_authenticated %}

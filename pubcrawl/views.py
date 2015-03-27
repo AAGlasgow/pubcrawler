@@ -232,7 +232,7 @@ def edit_profile(request):
                 valid_update = False
 
         if valid_update:
-            return HttpResponseRedirect('/pubcrawl/profile/'+current_user.username+'/')
+            return HttpResponseRedirect('/pubcrawl/account_details/'+current_user.username+'/')
 
 
     context_dict = {}
@@ -268,40 +268,40 @@ def profile_list(request):
 @login_required
 def create_pubcrawl(request):
     if(request.method == 'POST'):
-    	form = CrawlForm(request.POST)
+        form = CrawlForm(request.POST)
         if form.is_valid():
-        	name=request.POST['name']
-        	creator=request.user
-        	description=request.POST['description']
-        	try:
-        	    drink=request.POST['drink']
-        	except Exception, e:
-        	    drink=False
-        	drinkDescription=request.POST['drinkDescription']
-        	try:
-        	    costume=request.POST['costume']
-        	except Exception, e:
-        	    costume=False
-        	costumeDescription=request.POST['costumeDescription']
-        	c = Crawl(  name=name, 
-        	            creator=creator,    description=description,
-        	            drink=drink,        drinkDescription=drinkDescription, 
-        	            costume=costume,    costumeDescription=costumeDescription)
-        	c.save()
-        	pubs = request.POST.getlist('pubid')
-        	for pub in pubs:
-        	    place = pub.split('+')
-        	    print(len(place))
-        	    print(place)
-        	    print(place[0],place[1])
-        	    if not Pub.objects.filter(placeID=place[0]).exists():
-        	        p = Pub(name=place[1], placeID=place[0])
-        	        p.save()
-        	    p = Pub.objects.get(placeID=place[0])
-        	    c.add_pub(p)
-        	return render(request, 'pubcrawl/index.html')
+            c = form.save(commit=False)
+            c.name=request.POST['name']
+            c.creator=request.user
+            c.description=request.POST['description']
+            try:
+                c.drink=request.POST['drink']
+            except Exception, e:
+                c.drink=False
+            c.drinkDescription=request.POST['drinkDescription']
+            try:
+                c.costume=request.POST['costume']
+            except Exception, e:
+                c.costume=False
+            c.costumeDescription=request.POST['costumeDescription']
+            c.save()
+            for content in request.FILES:
+                print content
+            if 'picture' in request.FILES:
+                print "Found a picture"
+                c.picture = request.FILES['picture']
+            c.save()
+            pubs = request.POST.getlist('pubid')
+            for pub in pubs:
+                place = pub.split('+')
+                if not Pub.objects.filter(placeID=place[0]).exists():
+                    p = Pub(name=place[1], placeID=place[0])
+                    p.save()
+                p = Pub.objects.get(placeID=place[0])
+                c.add_pub(p)
+            return render(request, 'pubcrawl/index.html')
         else:
-        	print form.errors
+            print form.errors
 
     else:
         form = CrawlForm()

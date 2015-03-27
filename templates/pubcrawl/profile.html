@@ -39,7 +39,7 @@
 
     <div class="container pull-left">
         {% if crawls%}
-            {% for crawl in crawls|slice:":5" %}
+            {% for crawl in crawls %}
                 <div class ="panel panel-default" id ='content'>
                         <div class="panel-heading">
                             <a href="{% url 'crawl' crawl.slug %}">
@@ -50,7 +50,11 @@
                     <div class="panel-body">
                         <div class="col-md-3">
                             <div class="row">
-                                <img width="90" height="100" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
+                                {% if crawl.picture %}
+                                    <img width="80" height="90" src="{{MEDIA_URL}}{{ crawl.picture }}" alt="Generic placeholder thumbnail"/>
+                                {% else %}
+                                    <img width="80" height="90" src="{% static 'images/kitten.jpg' %}" alt="Generic placeholder thumbnail"/>
+                                {% endif %}
                             </div>
                             <span><p>Score: <span id="score" class="badge">{{ crawl.score }}</span</p></span>
                             <p>Costume: <span class="glyphicon glyphicon-ok"></span></p>

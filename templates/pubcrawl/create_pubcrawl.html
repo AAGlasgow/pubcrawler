@@ -20,7 +20,7 @@
 				<button id="addPub" class="btn btn-primary">Add Pub</button>
 				<div id="pubList"></div>
 				<div>
-					<form role="form"  id="page_form" method="post" action="/pubcrawl/create_pubcrawl/">
+					<form role="form"  id="page_form" method="post" action="/pubcrawl/create_pubcrawl/" enctype="multipart/form-data">
 					
 						{% csrf_token %}
 						<ul class="list-group">

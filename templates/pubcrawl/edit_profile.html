@@ -13,9 +13,9 @@
                 enctype="multipart/form-data">
 
             {% csrf_token %}
-	    <ul><b>Email:</b> {{ user_form.email }}</ul>
+	        <ul><b>Email:</b> {{ user_form.email }}</ul>
             <ul>{{ profile_form.as_p }}</ul>
-            {% if profile_exists = True %}
+            {% if profile_exists == True %}
                 <ul><img width="300" src="{{MEDIA_URL}}{{ profile.picture }}" alt="{{user.username}}'s profile picture" /></ul>
             {% endif %}
             
