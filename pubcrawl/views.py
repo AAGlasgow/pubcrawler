@@ -268,7 +268,7 @@ def profile_list(request):
 @login_required
 def create_pubcrawl(request):
     if(request.method == 'POST'):
-    	form = PageForm(request.POST)
+    	form = CrawlForm(request.POST)
         if form.is_valid():
         	name=request.POST['name']
         	creator=request.user

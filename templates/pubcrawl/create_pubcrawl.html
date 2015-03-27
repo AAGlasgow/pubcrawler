@@ -6,28 +6,44 @@
 
 {% block body_block %}
 
-	<div id="map-canvas" style="width: 400px; height: 300px;"></div>
-	<input type="focus" id="pac-input" style="width:300px; height: 20px; margin-top: 16px;"></input>
-	<div id="placeid"></div>
-	<button id="addPub" class="btn btn-primary">Add Pub</button>
-	<div id="pubList"></div>
-	<div>
-		<form role="form"  id="page_form" method="post" action="/pubcrawl/create_pubcrawl/">
-		
-			{% csrf_token %}
-			
-			{% for field in form.visible_fields %}
-				{{ field.errors }}
-				{{ field.help_text }}
-				{{ field }}<br /><br />
-			{% endfor %}
+	<div class="page-header">
+	        <h1>Create a Crawl:</h1>
+	</div>
 
-			<select multiple="multiple" id="id_pubs" name="pubid">
-			</select>
+	<div class="container pull-left">
+		<div class="panel-body">
+			<div class="col-md-5">
+			<div id="map-canvas" style="width: 100%; height: 300px;"></div>
+			<input type="focus" id="pac-input" class="form-control"></input>
+			</div>
+			<div class="col-md-5">
+				<button id="addPub" class="btn btn-primary">Add Pub</button>
+				<div id="pubList"></div>
+				<div>
+					<form role="form"  id="page_form" method="post" action="/pubcrawl/create_pubcrawl/">
+					
+						{% csrf_token %}
+						<ul class="list-group">
+						{% for field in form.visible_fields %}
+							{{ field.errors }}
+							<li class="list-group-item">
+								{{ field.errors }}
+								{{ field.help_text }} {{ field }}
+							</li>
+						{% endfor %}
+						</ul>
+						<select multiple="multiple" id="id_pubs" name="pubid" style="display: none">
+						</select>
+						
+						<button class="btn btn-primary" type="submit" name="submit">Create Crawl</button>
+					</form>
+					<br />
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
 			
-			<button class="btn btn-primary" type="submit" name="submit">Create Crawl</button>
-		</form>
-		<br />
+		</div>
 	</div>
 
 {% endblock %}
